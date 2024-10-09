@@ -3,7 +3,6 @@ package com.flipfit.business;
 import com.flipfit.bean.Booking;
 import com.flipfit.bean.FlipFitGym;
 import com.flipfit.bean.Slot;
-import com.flipfit.business.CustomerInterface;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
