@@ -9,7 +9,14 @@ public class GymFlipFitAdminMenu {
     AdminInterface adminService = new AdminService();
 
     public boolean login (String username, String password) {
-        // login logic
+        if (userVerify(username, password)){
+            System.out.println("Admin logged in");
+            adminMainPage();
+        }
+        else{
+            System.out.println("Invalid username or password");
+            return false;
+        }
         return true;
     }
 //registration
