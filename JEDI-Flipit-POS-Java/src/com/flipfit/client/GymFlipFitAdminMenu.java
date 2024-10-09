@@ -1,5 +1,8 @@
 package com.flipfit.client;
 
+import com.flipfit.business.AdminInterface;
+import com.flipfit.business.AdminService;
+
 public class GymFlipFitAdminMenu {
     AdminInterface adminService = new AdminService();
 
@@ -7,6 +10,7 @@ public class GymFlipFitAdminMenu {
         // login logic
         return true;
     }
+//registration
 
     private boolean userVerify (String username, String password) {
         //authentication logic
