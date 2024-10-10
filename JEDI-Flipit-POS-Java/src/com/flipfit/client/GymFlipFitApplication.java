@@ -1,6 +1,11 @@
 package com.flipfit.client;
 
+import com.flipkart.business.*;
+
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import static sun.security.jgss.GSSUtil.login;
 
@@ -32,6 +37,13 @@ public class GymFlipFitApplication {
                 System.out.println("Please choose a valid option");
         }
     }
+
+    private static AdminInterface adminClient = new AdminService();
+    private static CustomerInterface customerClient = new CustomerService();
+    private static GymOwnerInterface gymOwnerClient = new GymOwnerService();
+    private static GymFlipFitCustomerMenu gymFlipFitCustomerMenu = new GymFlipFitCustomerMenu();
+    private static GymFlipFitAdminMenu gymFlipFitAdminMenu = new GymFlipFitAdminMenu();
+    private static GymFlipFitOwnerMenu gymFlipFitOwnerMenu = new GymFlipFitOwnerMenu();
 
     private static void changePassword() {
         Scanner scanner = new Scanner(System.in);
