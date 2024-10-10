@@ -2,7 +2,7 @@ package com.flipfit.business;
 
 import java.util.List;
 
-public class GymOwnerService {
+public class GymOwnerService implements GymOwnerInterface{
     public boolean login (String userName, String password) {
         //verify the user
         return false;

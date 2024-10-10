@@ -18,4 +18,7 @@ public class AdminService implements AdminInterface{
     public boolean changePassword(String userName, String oldPassword, String newPassword) {
         return false;
     }
+    public void login(String userName, String password) {
+        return;
+    }
 }
