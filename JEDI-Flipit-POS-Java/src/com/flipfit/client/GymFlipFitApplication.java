@@ -1,6 +1,6 @@
 package com.flipfit.client;
 
-import com.flipkart.business.*;
+import com.flipfit.business.*;
 
 import java.util.Scanner;
 import java.util.ArrayList;

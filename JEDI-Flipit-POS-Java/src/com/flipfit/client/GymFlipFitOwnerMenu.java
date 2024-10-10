@@ -1,5 +1,11 @@
 package com.flipfit.client;
 
+import com.flipfit.business.AdminService;
+import com.flipfit.business.GymOwnerInterface;
+import com.flipfit.business.GymOwnerService;
+
+import java.util.*;
+
 public class GymFlipFitOwnerMenu {
 
     public void gymOwnerMainPage() {
