@@ -1,6 +1,6 @@
 package com.flipfit.client;
 
-import com.flipfit.bean.GymOwner;
+import com.flipfit.bean.FlipFitGymOwner;
 import com.flipfit.business.AdminInterface;
 import com.flipfit.business.AdminService;
 import java.util.*;
@@ -50,7 +50,7 @@ public class GymFlipFitAdminMenu {
                     System.out.println("Approval status: " + (approvalStatus ? "Success" : "Failed"));
                     break;
                 case 2:
-                    List<GymOwner> remainingSlots = adminService.viewNonApprovedSlots();
+                    List<FlipFitGymOwner> remainingSlots = adminService.viewNonApprovedSlots();
                     break;
                 case 3:
                     System.out.println("Exiting...");

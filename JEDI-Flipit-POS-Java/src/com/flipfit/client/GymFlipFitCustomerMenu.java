@@ -1,8 +1,8 @@
 package com.flipfit.client;
 
-import com.flipfit.bean.Booking;
-import com.flipfit.bean.FlipFitGym;
-import com.flipfit.bean.Slot;
+import com.flipfit.bean.FlipFitBooking;
+import com.flipfit.bean.FlipFitGymCentre;
+import com.flipfit.bean.FlipFitSlots;
 import com.flipfit.business.CustomerInterface;
 import com.flipfit.business.CustomerService;
 
@@ -38,7 +38,7 @@ public class GymFlipFitCustomerMenu {
                 case 1:
                     System.out.print("Enter city: ");
                     String city = scanner.nextLine();
-                    List<FlipFitGym> gyms = customerService.viewAllGymCenters(city);
+                    List<FlipFitGymCentre> gyms = customerService.viewAllGymCenters(city);
                     System.out.println(gyms);  // Assuming FlipFitGym has a toString() method
                     break;
                 case 2:
@@ -46,7 +46,7 @@ public class GymFlipFitCustomerMenu {
                     String gymId = scanner.nextLine();
                     System.out.print("Enter date (YYYY-MM-DD): ");
                     LocalDate date = LocalDate.parse(scanner.nextLine());
-                    List<Slot> freeSlots = customerService.viewAllFreeSlots(gymId, date);
+                    List<FlipFitSlots> freeSlots = customerService.viewAllFreeSlots(gymId, date);
                     System.out.println(freeSlots);
                     break;
                 case 3:
@@ -54,7 +54,7 @@ public class GymFlipFitCustomerMenu {
                     String gymIdForBookings = scanner.nextLine();
                     System.out.print("Enter date (YYYY-MM-DD): ");
                     LocalDate bookingDate = LocalDate.parse(scanner.nextLine());
-                    List<Booking> bookings = customerService.viewAllBookings(gymIdForBookings, bookingDate);
+                    List<FlipFitBooking> bookings = customerService.viewAllBookings(gymIdForBookings, bookingDate);
                     System.out.println(bookings);  // Assuming Booking has a toString() method
                     break;
                 case 4:

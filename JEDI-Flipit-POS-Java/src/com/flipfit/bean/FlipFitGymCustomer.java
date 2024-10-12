@@ -1,10 +1,10 @@
 package com.flipfit.bean;
 
-public class Customer extends User {
+public class FlipFitCustomer extends FlipFitUser {
     private String customerCity;
     private String customerCardNumber;
 
-    public Customer (String userId, String userName, String email, String password, String customerCity, String customerCardNumber) {
+    public FlipFitCustomer(String userId, String userName, String email, String password, String customerCity, String customerCardNumber) {
         super(userId, userName, email, password);
         this.customerCity = customerCity;
         this.customerCardNumber = customerCardNumber;

@@ -2,7 +2,7 @@ package com.flipfit.bean;
 
 import java.util.List;
 
-public class GymOwner extends User {
+public class GymOwner extends FlipFitUser {
 
     private String adharCardNumber;
     private List<String> gymCenterId;
