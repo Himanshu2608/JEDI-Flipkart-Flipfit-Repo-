@@ -1,8 +1,8 @@
 package com.flipfit.business;
 
-public interface BookingInterface {
-    public boolean addBooking(String userId, String slotId, String gymId);
-    public boolean isBookingValid(String slotId, String gymId);
-    public boolean cancelBooking(String bookingid);
+import com.flipfit.bean.*;
 
+public interface IFlipFitBookings{
+    public FlipFitBooking makeBooking(int userID, int centreID, int startTime);
+    public boolean deleteBooking(int bookingId);
 }
