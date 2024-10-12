@@ -1,31 +1,32 @@
 package com.flipfit.bean;
 
-public class Payment {
-    private String paymentId;
-    private String bookingId;
-    private float amountPaid;
+public class FlipFitPayments {
+    private int userID;
+    private int paymentType;
+    private String paymentInfo;
 
-    public Payment() {}
-
-    public String getPaymentId() {
-        return paymentId;
+    public String getPaymentInfo() {
+        return paymentInfo;
     }
 
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
+    public void setPaymentInfo(String paymentInfo) {
+        this.paymentInfo = paymentInfo;
     }
 
-    public String getBookingId() {
-        return bookingId;
-    }
-    public void setBookingId(String bookingId) {
-        this.bookingId = bookingId;
+    public int getPaymentType() {
+        return paymentType;
     }
 
-    public float getAmountPaid() {
-        return amountPaid;
+    public void setPaymentType(int paymentType) {
+        this.paymentType = paymentType;
     }
-    public void setAmountPaid(float amountPaid) {
-        this.amountPaid = amountPaid;
+
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 }

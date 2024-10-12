@@ -2,40 +2,40 @@ package com.flipfit.bean;
 
 import java.util.List;
 
-public class GymOwner extends FlipFitUser {
+public class FlipFitGymOwner extends FlipFitUser {
+    public String panId;
+    public String gstNum;
+    public String aadharNumber;
+    public boolean isApproved;
 
-    private String adharCardNumber;
-    private List<String> gymCenterId;
-    private boolean status;
-
-    public GymOwner(String id, String name, String email, String password, String adharCardNumber, List<String> gymCenterId, boolean status) {
-        super(id, name, email, password);
-        this.adharCardNumber = adharCardNumber;
-        this.gymCenterId = gymCenterId;
-        this.status = status;
+    public String getPanId() {
+        return panId;
     }
 
-    public boolean isStatus() {
-        return status;
+    public void setPanId(String panId) {
+        this.panId = panId;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public String getGSTNum() {
+        return gstNum;
     }
 
-    public List<String> getGymCenterId() {
-        return gymCenterId;
+    public void setGSTIN(String gstNum) {
+        this.gstNum = gstNum;
     }
 
-    public void setGymCenterId(List<String> gymCenterId) {
-        this.gymCenterId = gymCenterId;
+    public String getAadharNumber() {
+        return aadharNumber;
     }
 
-    public String getAdharCardNumber() {
-        return adharCardNumber;
+    public void setAadharNumber(String aadharNumber) {
+        this.aadharNumber = aadharNumber;
     }
 
-    public void setAdharCardNumber(String adharCardNumber) {
-        this.adharCardNumber = adharCardNumber;
+    public boolean getIsApproved() {
+        return isApproved;
+    }
+    public void setIsApproved(boolean isApproved) {
+        this.isApproved = isApproved;
     }
 }

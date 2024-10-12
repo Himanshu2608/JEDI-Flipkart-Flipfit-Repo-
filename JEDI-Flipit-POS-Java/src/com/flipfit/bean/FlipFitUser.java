@@ -1,24 +1,22 @@
 package com.flipfit.bean;
 
 public class FlipFitUser {
-    private String userId;
+    private int userId;
     private String userName;
-    private String email;
     private String password;
+    private String emailID;
+    private String phoneNumber;
+    private String city;
+    private String pinCode;
+    // Role: 0 -> customer, 1 -> gym owner, 2 -> admin
+    private int role;
 
-    public User (String userId, String userName, String email, String password) {
-        this.userId = userId;
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-    }
-
-    public String getUserID() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserID(String userID) {
-        this.userId = userID;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {
@@ -29,20 +27,52 @@ public class FlipFitUser {
         this.userName = userName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmailID() {
+        return emailID;
+    }
+
+    public void setEmailID(String emailID) {
+        this.emailID = emailID;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPinCode() {
+        return pinCode;
+    }
+
+    public void setPinCode(String pinCode) {
+        this.pinCode = pinCode;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
 }

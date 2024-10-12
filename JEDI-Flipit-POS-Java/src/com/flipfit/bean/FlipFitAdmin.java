@@ -1,5 +1,7 @@
 package com.flipfit.bean;
 
+
+
 public class FlipFitAdmin  {
     private int userId;
     private String password;
@@ -10,9 +12,7 @@ public class FlipFitAdmin  {
     public void setPassword(String password){
         this.password=password;
     }
-    public void setEmailID(String emailID){
-        this.emailID=emailID;
-    }
+    public void setEmailID(String emailID){this.emailID=emailID;}
     public int getUserID(){
         return this.userId;
     }

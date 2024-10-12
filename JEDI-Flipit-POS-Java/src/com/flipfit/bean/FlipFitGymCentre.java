@@ -1,98 +1,70 @@
 package com.flipfit.bean;
 
-public class FlipFitGym {
+public class FlipFitGymCentre {
+    private int centreID;
+    private int ownerID;
+    private int capacity;
+    private boolean approved;
+    private String city;
+    private String state;
+    private String pincode;
 
-    private String gymId;
-    private String gymName;
-    private String ownerId;
-    private String ownerName;
-    private String gymAddress;
-    private int numberOfSlots;
-    private int cost;
-    private int gymStatus;
-    private String ownerGstNumber;
 
-    public FlipFitGym(String gymId, String gymName, String ownerId, String ownerName, String gymAddress, int numberOfSlots, int cost, int gymStatus, String ownerGstNumber) {
-        this.gymId = gymId;
-        this.gymName = gymName;
-        this.ownerId = ownerId;
-        this.ownerName = ownerName;
-        this.gymAddress = gymAddress;
-        this.numberOfSlots = numberOfSlots;
-        this.cost = cost;
-        this.gymStatus = gymStatus;
-        this.ownerGstNumber = ownerGstNumber;
+    public int getCentreID() {
+        return centreID;
     }
 
-    public int getNumberOfSlots() {
-        return numberOfSlots;
+    public void setCentreID(int centreID) {
+        this.centreID = centreID;
     }
 
-    public void setNumberOfSlots(int numberOfSlots) {
-        this.numberOfSlots = numberOfSlots;
+    public int getOwnerID() {
+        return ownerID;
     }
 
-    public String getGymId() {
-        return gymId;
+    public void setOwnerID(int ownerID) {
+        this.ownerID = ownerID;
     }
 
-    public void setGymId(String gymId) {
-        this.gymId = gymId;
+
+    public int getCapacity() {
+        return capacity;
     }
 
-    public String getGymName() {
-        return gymName;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
-    public void setGymName(String gymName) {
-        this.gymName = gymName;
+    public boolean isApproved() {
+        return approved;
     }
 
-    public String getOwnerId() {
-        return ownerId;
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public String getCity() {
+        return city;
     }
 
-    public String getOwnerName() {
-        return ownerName;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
+    public String getState() {
+        return state;
     }
 
-    public String getGymAddress() {
-        return gymAddress;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public void setGymAddress(String gymAddress) {
-        this.gymAddress = gymAddress;
+    public String getPincode() {
+        return pincode;
     }
 
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-
-    public int getGymStatus() {
-        return gymStatus;
-    }
-
-    public void setGymStatus(int gymStatus) {
-        this.gymStatus = gymStatus;
-    }
-    public String getOwnerGstNumber() {
-        return ownerGstNumber;
-    }
-
-    public void setOwnerGstNumber(String ownerGstNumber) {
-        this.ownerGstNumber = ownerGstNumber;
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
     }
 
 }

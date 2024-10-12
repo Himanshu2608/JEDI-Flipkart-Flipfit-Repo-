@@ -1,28 +1,19 @@
 package com.flipfit.bean;
 
-public class FlipFitCustomer extends FlipFitUser {
-    private String customerCity;
-    private String customerCardNumber;
+public class FlipFitGymCustomer extends FlipFitUser {
+    public int paymentType;
+    public String paymentInfo;
 
-    public FlipFitCustomer(String userId, String userName, String email, String password, String customerCity, String customerCardNumber) {
-        super(userId, userName, email, password);
-        this.customerCity = customerCity;
-        this.customerCardNumber = customerCardNumber;
+    public int getPaymentType() {
+        return paymentType;
     }
-
-    public String getCustomerAddress() {
-        return customerCity;
+    public void setPaymentType(int paymentType) {
+        this.paymentType = paymentType;
     }
-
-    public void setCustomerAddress(String customerAddress) {
-        this.customerCity = customerAddress;
+    public String getPaymentInfo() {
+        return paymentInfo;
     }
-
-    public String getCustomerCardNumber() {
-        return customerCardNumber;
-    }
-
-    public void setCustomerCardNumber(String customerCardNumber) {
-        this.customerCardNumber = customerCardNumber;
+    public void setPaymentInfo(String paymentInfo) {
+        this.paymentInfo = paymentInfo;
     }
 }
