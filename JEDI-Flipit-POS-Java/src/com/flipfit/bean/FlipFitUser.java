@@ -1,6 +1,6 @@
 package com.flipfit.bean;
 
-public class User {
+public class FlipFitUser {
     private String userId;
     private String userName;
     private String email;
