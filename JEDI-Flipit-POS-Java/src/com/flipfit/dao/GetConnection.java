@@ -9,7 +9,7 @@ public class GetConnection {
     public static Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFitSchema", DBConstants.USER, DBConstants.PASSWORD);
+            Connection con = DriverManager.getConnection(DBConstants.DB_URL, DBConstants.USER, DBConstants.PASSWORD);
             return con;
         }
         catch (Exception e) {
