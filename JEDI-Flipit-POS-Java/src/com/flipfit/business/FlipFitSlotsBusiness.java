@@ -1,11 +1,10 @@
 package com.flipfit.business;
 
-
 import com.flipfit.bean.FlipFitSlots;
 import com.flipfit.business.IFlipFitSlots;
 import com.flipfit.dao.*;
-import com.flipfit.dao.interfaces.IFlipFitGymOwnerDAO;
-import com.flipfit.dao.interfaces.IFlipFitSlotDAO;
+import com.flipfit.dao.IFlipFitGymOwnerDAO;
+import com.flipfit.dao.IFlipFitSlotDAO;
 
 public class FlipFitSlotsBusiness implements IFlipFitSlots {
     public boolean updateAvailability(FlipFitSlots flipFitSlots) {

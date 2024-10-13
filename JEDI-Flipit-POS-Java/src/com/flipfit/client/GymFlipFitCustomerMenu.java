@@ -1,93 +1,108 @@
 package com.flipfit.client;
 
-import com.flipfit.bean.FlipFitBooking;
 import com.flipfit.bean.FlipFitGymCentre;
 import com.flipfit.bean.FlipFitSlots;
-import com.flipfit.business.CustomerInterface;
+import com.flipfit.bean.FlipFitUser;
+import com.flipfit.business.BookingsBusiness;
+import com.flipfit.business.FlipFitGymCentreBusiness;
 import com.flipfit.business.FlipFitGymCustomerBusiness;
+import com.flipfit.dao.FlipFitBookingDAOImpl;
+import com.flipfit.dao.FlipFitGymCentreDAOImpl;
+import com.flipfit.dao.FlipFitGymCustomerDAOImpl;
+import com.flipfit.exceptions.ExceptionHandler;
+import com.flipfit.exceptions.InvalidChoiceException;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
 import java.util.Scanner;
 
+import java.util.List;
+
 public class GymFlipFitCustomerMenu {
-    CustomerInterface customerService = new FlipFitGymCustomerBusiness();
-    public boolean login (String username, String password) {
-        //validate cred from the DB
-        customerMainPage();
-        return false;
-    }
+    public static void getFlipFitCustomerMenu(FlipFitUser gymCustomer) throws InvalidChoiceException {
+        try {
+            int userId = gymCustomer.getUserId();
+            Scanner sc = new Scanner(System.in);
 
-    public void customerMainPage () {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println("Welcome to FlipFit Gym Booking System");
-            System.out.println("1. View all gym centers in a city");
-            System.out.println("2. View all free slots in a gym on a specific date");
-            System.out.println("3. View all bookings in a gym on a specific date");
-            System.out.println("4. Book a slot");
-            System.out.println("5. Cancel a slot");
-            System.out.println("7. Exit");
-            System.out.print("Enter your choice: ");
+            FlipFitGymCustomerDAOImpl flipFitGymCustomerDAO = new FlipFitGymCustomerDAOImpl();
+            FlipFitGymCustomerBusiness FCBservice = new FlipFitGymCustomerBusiness(flipFitGymCustomerDAO);
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();  // Consume newline
+            FlipFitGymCentreDAOImpl flipFitGymCenterDAO = new FlipFitGymCentreDAOImpl();
+            FlipFitGymCentreBusiness FCService = new FlipFitGymCentreBusiness(flipFitGymCenterDAO);
 
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter city: ");
-                    String city = scanner.nextLine();
-                    List<FlipFitGymCentre> gyms = customerService.viewAllGymCenters(city);
-                    System.out.println(gyms);  // Assuming FlipFitGym has a toString() method
-                    break;
-                case 2:
-                    System.out.print("Enter gym ID: ");
-                    String gymId = scanner.nextLine();
-                    System.out.print("Enter date (YYYY-MM-DD): ");
-                    LocalDate date = LocalDate.parse(scanner.nextLine());
-                    List<FlipFitSlots> freeSlots = customerService.viewAllFreeSlots(gymId, date);
-                    System.out.println(freeSlots);
-                    break;
-                case 3:
-                    System.out.print("Enter gym ID: ");
-                    String gymIdForBookings = scanner.nextLine();
-                    System.out.print("Enter date (YYYY-MM-DD): ");
-                    LocalDate bookingDate = LocalDate.parse(scanner.nextLine());
-                    List<FlipFitBooking> bookings = customerService.viewAllBookings(gymIdForBookings, bookingDate);
-                    System.out.println(bookings);  // Assuming Booking has a toString() method
-                    break;
-                case 4:
-                    System.out.print("Enter user ID: ");
-                    String userId = scanner.nextLine();
-                    System.out.print("Enter gym ID: ");
-                    String gymIdForBooking = scanner.nextLine();
-                    System.out.print("Enter slot ID: ");
-                    String slotId = scanner.nextLine();
-                    System.out.print("Enter date (YYYY-MM-DD): ");
-                    LocalDate bookingDateForSlot = LocalDate.parse(scanner.nextLine());
-                    System.out.print("Enter time (HH:MM): ");
-                    LocalTime bookingTime = LocalTime.parse(scanner.nextLine());
-                    boolean bookingStatus = customerService.bookSlot(userId, gymIdForBooking, slotId, bookingDateForSlot, bookingTime);
-                    System.out.println("Booking status: " + (bookingStatus ? "Success" : "Failed"));
-                    break;
-                case 5:
-                    System.out.print("Enter gym ID: ");
-                    String gymIdForCancellation = scanner.nextLine();
-                    System.out.print("Enter date (YYYY-MM-DD): ");
-                    LocalDate cancellationDate = LocalDate.parse(scanner.nextLine());
-                    System.out.print("Enter time (HH:MM): ");
-                    LocalTime cancellationTime = LocalTime.parse(scanner.nextLine());
-                    boolean cancellationStatus = customerService.cancelSlot(gymIdForCancellation, cancellationDate, cancellationTime);
-                    System.out.println("Cancellation status: " + (cancellationStatus ? "Success" : "Failed"));
-                    break;
-                case 6:
-                    System.out.println("Exiting");
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Invalid choice, please try again.");
-            }
+            FlipFitBookingDAOImpl flipFitBookingDAO = new FlipFitBookingDAOImpl();
+            BookingsBusiness BService = new BookingsBusiness(flipFitBookingDAO);
+
+            int choice;
+
+            do {
+                System.out.println( "===========================" );
+                System.out.println( "    FlipFit Customer Menu   " );
+                System.out.println("===========================" );
+
+                System.out.println( """
+                        Choose an option:
+                         1. View Booked Slots
+                         2. View Centres
+                         3. Logout
+                        """ );
+
+                choice = sc.nextInt();
+
+                switch (choice) {
+                    case 1: {
+                        System.out.println( "=========== View Booked Slots ===========" );
+                        FCBservice.viewBookedSlots(userId);
+
+                        System.out.println( "Type 1. If you wish to cancel" );
+                        System.out.println("Type 2. To return to main menu" );
+
+                        choice = sc.nextInt();
+
+                        if (choice == 1) {
+                            System.out.print( "Choose the booking ID you wish to cancel:> " );
+                            int bookingId = sc.nextInt();
+                            BService.deleteBooking(bookingId);
+                        }
+
+                        break;
+                    }
+                    case 2: {
+                        System.out.println( "=========== View Centres ===========");
+
+                        List<FlipFitGymCentre> centreList = FCBservice.viewCentres();
+                        for (FlipFitGymCentre centre : centreList) {
+                            System.out.println( "CentreId: " + centre.getCentreID() + ", City: " + centre.getCity() + ", Pincode: " + centre.getPincode() );
+                        }
+
+                        System.out.print( "Choose a centre you want to book a slot in:> " );
+                        int centreId = sc.nextInt();
+
+                        List<FlipFitSlots> slotsList = FCService.viewAvailableSlots(centreId);
+                        System.out.println( "These are the available slots:" );
+                        for (FlipFitSlots flipFitSlots : slotsList) {
+                            System.out.println( "Slot Id: " + flipFitSlots.getSlotId() + ", Slot Timing: " + flipFitSlots.getSlotTime() + ", Availability: " + flipFitSlots.getSeatsAvailable() + ", CentreId: " + flipFitSlots.getCentreId() );
+                        }
+
+                        System.out.print("Give the start time you wish to book:> " );
+                        int startTime = sc.nextInt();
+
+                        System.out.print( "Give the centre ID:> " );
+                        int centreID = sc.nextInt();
+
+                        BService.makeBooking(userId, centreID, startTime);
+
+                        break;
+                    }
+                    case 3: {
+                        System.out.println( "Successfully logged out");
+                        return;
+                    }
+                    default: {
+                        throw new InvalidChoiceException( "Invalid choice entered: " + choice );
+                    }
+                }
+            } while (choice != 4);
+        } catch (InvalidChoiceException e) {
+            ExceptionHandler.InvalidChoiceMainMenu(e);
         }
     }
 }
