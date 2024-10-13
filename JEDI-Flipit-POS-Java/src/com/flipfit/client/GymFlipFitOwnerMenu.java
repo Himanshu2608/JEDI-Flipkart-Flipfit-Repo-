@@ -1,8 +1,7 @@
 package com.flipfit.client;
 
 import com.flipfit.business.AdminService;
-import com.flipfit.business.GymOwnerInterface;
-import com.flipfit.business.GymOwnerService;
+import com.flipfit.business.FlipFitGymOwnerBusiness;
 
 import java.util.*;
 
@@ -10,7 +9,7 @@ public class GymFlipFitOwnerMenu {
 
     public void gymOwnerMainPage() {
         Scanner scanner = new Scanner(System.in);
-        GymOwnerService gymOwnerService = new GymOwnerService();
+        FlipFitGymOwnerBusiness flipFitGymOwnerBusiness = new FlipFitGymOwnerBusiness();
 
         while (true) {
             System.out.println("Gym Owner Service Menu:");
@@ -34,7 +33,7 @@ public class GymFlipFitOwnerMenu {
                     System.out.print("Enter cost: ");
                     int cost = scanner.nextInt();
                     scanner.nextLine();
-                    boolean addCenterStatus = gymOwnerService.addCenter(ownerId, gymId, city, capacity, cost);
+                    boolean addCenterStatus = flipFitGymOwnerBusiness.addCenter(ownerId, gymId, city, capacity, cost);
                     System.out.println("Add center status: " + (addCenterStatus ? "Success" : "Failed"));
                     break;
                 case 2:
@@ -42,7 +41,7 @@ public class GymFlipFitOwnerMenu {
                     String removeOwnerId = scanner.nextLine();
                     System.out.print("Enter gym ID: ");
                     String removeGymId = scanner.nextLine();
-                    boolean removeCenterStatus = gymOwnerService.removeCenter(removeOwnerId, removeGymId);
+                    boolean removeCenterStatus = flipFitGymOwnerBusiness.removeCenter(removeOwnerId, removeGymId);
                     System.out.println("Remove center status: " + (removeCenterStatus ? "Success" : "Failed"));
                     break;
                 case 3:

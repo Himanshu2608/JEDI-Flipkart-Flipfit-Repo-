@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static sun.security.jgss.GSSUtil.login;
+//import static sun.security.jgss.GSSUtil.login;
 
 public class GymFlipFitApplication {
     public static void main(String[] args) {
@@ -39,8 +39,8 @@ public class GymFlipFitApplication {
     }
 
     private static AdminInterface adminClient = new AdminService();
-    private static CustomerInterface customerClient = new CustomerService();
-    private static GymOwnerInterface gymOwnerClient = new GymOwnerService();
+    private static CustomerInterface customerClient = new FlipFitGymCustomerBusiness();
+    private static GymOwnerInterface gymOwnerClient = new FlipFitGymOwnerBusiness();
     private static GymFlipFitCustomerMenu gymFlipFitCustomerMenu = new GymFlipFitCustomerMenu();
     private static GymFlipFitAdminMenu gymFlipFitAdminMenu = new GymFlipFitAdminMenu();
     private static GymFlipFitOwnerMenu gymFlipFitOwnerMenu = new GymFlipFitOwnerMenu();
