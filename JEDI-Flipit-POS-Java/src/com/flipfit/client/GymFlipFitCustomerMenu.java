@@ -4,7 +4,7 @@ import com.flipfit.bean.FlipFitBooking;
 import com.flipfit.bean.FlipFitGymCentre;
 import com.flipfit.bean.FlipFitSlots;
 import com.flipfit.business.CustomerInterface;
-import com.flipfit.business.CustomerService;
+import com.flipfit.business.FlipFitGymCustomerBusiness;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GymFlipFitCustomerMenu {
-    CustomerInterface customerService = new CustomerService();
+    CustomerInterface customerService = new FlipFitGymCustomerBusiness();
     public boolean login (String username, String password) {
         //validate cred from the DB
         customerMainPage();
