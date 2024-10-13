@@ -3,7 +3,7 @@ import com.flipfit.bean.*;
 import com.flipfit.client.*;
 import com.flipfit.dao.interfaces.IFlipFitAdminDAO;
 import com.flipfit.dao.FlipFitAdminDAOImpl;
-import com.flipfit.business.IFlipFitAdmin;
+import com.flipfit.business.*;
 import java.util.List;
 
 public class FlipFitAdminBusiness implements IFlipFitAdmin {

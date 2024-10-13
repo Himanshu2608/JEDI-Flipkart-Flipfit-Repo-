@@ -1,7 +1,7 @@
 package com.flipfit.business;
 import com.flipfit.client.*;
 import com.flipfit.dao.FlipFitGymCustomerDAOImpl;
-import com.flipfit.dao.interfaces.IFlipFitBookingDAO;
+import com.flipfit.dao.IFlipFitBookingDAO;
 import com.flipfit.bean.*;
 
 import com.flipfit.dao.FlipFitBookingDAOImpl;
