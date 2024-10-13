@@ -1,192 +1,223 @@
 package com.flipfit.client;
 
-import com.flipfit.business.*;
+import com.flipfit.bean.FlipFitAdmin;
+import com.flipfit.bean.FlipFitGymCustomer;
+import com.flipfit.bean.FlipFitGymOwner;
+import com.flipfit.bean.FlipFitUser;
+import com.flipfit.business.FlipFitAdminBusiness;
+import com.flipfit.business.FlipFitGymCustomerBusiness;
+import com.flipfit.business.FlipFitGymOwnerBusiness;
+import com.flipfit.business.IFlipFitAdmin;
+import com.flipfit.dao.FlipFitAdminDAOImpl;
+import com.flipfit.dao.FlipFitGymCustomerDAOImpl;
+import com.flipfit.dao.FlipFitGymOwnerDAOImpl;
+import com.flipfit.exceptions.ExceptionHandler;
+import com.flipfit.exceptions.InvalidChoiceException;
 
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-//import static sun.security.jgss.GSSUtil.login;
+import com.flipfit.constant.ColorConstants;
+
 
 public class GymFlipFitApplication {
-    public static void main(String[] args) {
-        homePage();
-        System.out.println("Choose a option : \n1: Enter to login\n2:Enter to register as Customer\n3:Enter to register as Gym " +
-                "Owner\n4: Change Password\n5: Exit");
-        Scanner scanner = new Scanner(System.in);
-        int option = scanner.nextInt();
-        switch (option) {
-            case 1:
-                login();
-                break;
-            case 2:
-                registerAsCustomer();
-                break;
-            case 3:
-                registerGymOwner();
-                break;
-            case 4:
-                changePassword();
-                break;
-            case 5:
-                System.out.println("Exiting FlipFit App. Goodbye!");
-                System.exit(0);
-                break;
-            default:
-                System.out.println("Please choose a valid option");
-        }
-    }
-
-    private static AdminInterface adminClient = new AdminService();
-    private static CustomerInterface customerClient = new FlipFitGymCustomerBusiness();
-    private static GymOwnerInterface gymOwnerClient = new FlipFitGymOwnerBusiness();
-    private static GymFlipFitCustomerMenu gymFlipFitCustomerMenu = new GymFlipFitCustomerMenu();
-    private static GymFlipFitAdminMenu gymFlipFitAdminMenu = new GymFlipFitAdminMenu();
-    private static GymFlipFitOwnerMenu gymFlipFitOwnerMenu = new GymFlipFitOwnerMenu();
-
-    private static void changePassword() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
-        System.out.print("Enter old password: ");
-        String oldPassword = scanner.nextLine();
-        System.out.print("Enter new password: ");
-        String newPassword = scanner.nextLine();
-
-        System.out.println("\nEnter your role:");
-        System.out.println("1: Customer");
-        System.out.println("2: GymOwner");
-        System.out.println("3: Admin");
-
+    /**
+     * main
+     *
+     * @param args
+     * @throws InvalidChoiceException
+     */
+    public static void main(String[] args) throws InvalidChoiceException {
         try {
-            int roleChoice = scanner.nextInt();
+            Scanner in = new Scanner(System.in);
+            int choice = 0;
 
-            switch(roleChoice) {
-                case 1:
-                    System.out.println("You selected Customer role.");
-                    if(customerClient.changePassword(username, oldPassword, newPassword)){
-                        System.out.println("Password changed successfully!");
+            do {
+                System.out.println(ColorConstants.CYAN + "=====================================" + ColorConstants.RESET);
+                System.out.println(ColorConstants.CYAN + "           Welcome To FlipFit        " + ColorConstants.RESET);
+                System.out.println(ColorConstants.CYAN + "=====================================" + ColorConstants.RESET);
+
+                System.out.println(ColorConstants.YELLOW + """
+                        Type:
+                         1 -> Login
+                         2 -> Registration of Customer
+                         3 -> Registration of Gym Owner
+                         4 -> Exit
+                        """ + ColorConstants.RESET);
+
+                choice = in.nextInt();
+
+                switch (choice) {
+                    case 1: {
+                        System.out.println(ColorConstants.BLUE + "=========== Login ===========" + ColorConstants.RESET);
+                        System.out.print(ColorConstants.PURPLE + "Enter your emailId:> " + ColorConstants.RESET);
+                        String username = in.next();
+                        System.out.print(ColorConstants.PURPLE + "Enter your password:> " + ColorConstants.RESET);
+                        String password = in.next();
+                        System.out.print(ColorConstants.PURPLE + "Enter your role:> Customer/Admin/GymOwner " + ColorConstants.RESET);
+                        String role = in.next();
+
+                        switch (role) {
+                            case "Customer": {
+                                FlipFitUser gymCustomer = new FlipFitUser();
+                                gymCustomer.setEmailID(username);
+                                gymCustomer.setPassword(password);
+
+                                FlipFitGymCustomerDAOImpl flipFitGymCustomerDAO = new FlipFitGymCustomerDAOImpl();
+                                FlipFitGymCustomerBusiness GCBservice = new FlipFitGymCustomerBusiness(flipFitGymCustomerDAO);
+
+                                gymCustomer = GCBservice.login(gymCustomer);
+                                if (gymCustomer == null)
+                                    throw new IllegalStateException("Invalid credentials");
+                                System.out.println(ColorConstants.GREEN + "=========== Customer Menu ===========" + ColorConstants.RESET);
+                                GymFlipFitCustomerMenu.getFlipFitCustomerMenu(gymCustomer);
+                                break;
+                            }
+                            case "Admin": {
+                                FlipFitAdmin admin = new FlipFitAdmin();
+                                admin.setEmailID(username);
+                                admin.setPassword(password);
+
+                                FlipFitAdminDAOImpl adminDAO = new FlipFitAdminDAOImpl();
+                                IFlipFitAdmin flipFitAdmin = new FlipFitAdminBusiness(adminDAO);
+                                boolean res = flipFitAdmin.adminLogin(admin);
+                                if (res) {
+                                    System.out.println(ColorConstants.GREEN + "=========== Admin Menu ===========" + ColorConstants.RESET);
+                                    GymFlipFitAdminMenu.getAdminView();
+                                }
+                                break;
+                            }
+                            case "GymOwner": {
+                                FlipFitUser gymOwner = new FlipFitUser();
+                                gymOwner.setEmailID(username);
+                                gymOwner.setPassword(password);
+
+                                FlipFitGymOwnerDAOImpl flipFitGymOwnerDAO = new FlipFitGymOwnerDAOImpl();
+                                FlipFitGymOwnerBusiness GOBservice = new FlipFitGymOwnerBusiness(flipFitGymOwnerDAO);
+
+                                gymOwner = GOBservice.login(gymOwner);
+                                if (gymOwner == null)
+                                    throw new IllegalStateException("Invalid credentials");
+                                System.out.println(ColorConstants.GREEN + "=========== GymOwner Menu ===========" + ColorConstants.RESET);
+                                GymFlipFitOwnerMenu.getFlipFitOwnerView(gymOwner);
+                                break;
+                            }
+                        }
+                        break;
                     }
-                    break;
-                case 2:
-                    System.out.println("You selected GymOwner role.");
-                    if(gymOwnerClient.changePassword(username, oldPassword, newPassword)){
-                        System.out.println("Password changed successfully!");
+
+                    case 2: {
+                        System.out.println(ColorConstants.BLUE + "=========== Registration of Gym Customer ===========" + ColorConstants.RESET);
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your email address:> " + ColorConstants.RESET);
+                        String emailID = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your phone number:> " + ColorConstants.RESET);
+                        String phoneNumber = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your city:> " + ColorConstants.RESET);
+                        String city = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your pin code:> " + ColorConstants.RESET);
+                        String pinCode = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your password:> " + ColorConstants.RESET);
+                        String password = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter username:> " + ColorConstants.RESET);
+                        String username = in.next();
+
+                        FlipFitUser gymCustomer = new FlipFitUser();
+                        gymCustomer.setEmailID(emailID);
+                        gymCustomer.setPassword(password);
+                        gymCustomer.setPhoneNumber(phoneNumber);
+                        gymCustomer.setUserName(username);
+
+                        FlipFitGymCustomerDAOImpl flipFitGymCustomerDAO = new FlipFitGymCustomerDAOImpl();
+                        FlipFitGymCustomerBusiness GCBservice = new FlipFitGymCustomerBusiness(flipFitGymCustomerDAO);
+
+                        FlipFitGymCustomer flipFitGymCustomer = new FlipFitGymCustomer();
+                        flipFitGymCustomer.setEmailID(emailID);
+                        flipFitGymCustomer.setPassword(password);
+                        flipFitGymCustomer.setPhoneNumber(phoneNumber);
+                        flipFitGymCustomer.setUserName(username);
+                        flipFitGymCustomer.setCity(city);
+                        flipFitGymCustomer.setPinCode(pinCode);
+                        flipFitGymCustomer.setRole(0);
+
+                        flipFitGymCustomer = GCBservice.registerCustomer(flipFitGymCustomer);
+                        gymCustomer.setUserID(flipFitGymCustomer.getUserId());
+                        System.out.println(ColorConstants.GREEN + "Registration completed for " + gymCustomer.getUserName() + ColorConstants.RESET);
+                        System.out.println(ColorConstants.GREEN + "=========== Customer Menu ===========" + ColorConstants.RESET);
+
+                        GymFlipFitCustomerMenu.getFlipFitCustomerMenu(gymCustomer);
+                        break;
                     }
-                    break;
-                case 3:
-                    System.out.println("You selected Admin role.");
-                    if(adminClient.changePassword(username, oldPassword, newPassword)){
-                        System.out.println("Password changed successfully!");
+
+                    case 3: {
+                        System.out.println(ColorConstants.BLUE + "=========== Registration of Gym Owner ===========" + ColorConstants.RESET);
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your email address:> " + ColorConstants.RESET);
+                        String emailID = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your phone number:> " + ColorConstants.RESET);
+                        String phoneNumber = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your city:> " + ColorConstants.RESET);
+                        String city = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your pin code:> " + ColorConstants.RESET);
+                        String pinCode = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your password:> " + ColorConstants.RESET);
+                        String password = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter username:> " + ColorConstants.RESET);
+                        String username = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your panId:> " + ColorConstants.RESET);
+                        String panId = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your gstNum:> " + ColorConstants.RESET);
+                        String gstNum = in.next();
+
+                        System.out.print(ColorConstants.PURPLE + "Enter your aadharNumber:> " + ColorConstants.RESET);
+                        String aadharNumber = in.next();
+
+                        FlipFitGymOwner flipFitOwner = new FlipFitGymOwner();
+                        flipFitOwner.setEmailID(emailID);
+                        flipFitOwner.setPassword(password);
+                        flipFitOwner.setPhoneNumber(phoneNumber);
+                        flipFitOwner.setCity(city);
+                        flipFitOwner.setPinCode(pinCode);
+                        flipFitOwner.setUserName(username);
+                        flipFitOwner.setRole(1);
+                        flipFitOwner.setGSTIN(gstNum);
+                        flipFitOwner.setAadharNumber(aadharNumber);
+                        flipFitOwner.setPanId(panId);
+                        flipFitOwner.setIsApproved(false);
+
+                        FlipFitGymOwnerDAOImpl flipFitGymOwnerDAO = new FlipFitGymOwnerDAOImpl();
+                        FlipFitGymOwnerBusiness GOBservice = new FlipFitGymOwnerBusiness(flipFitGymOwnerDAO);
+
+                        GOBservice.registerOwner(flipFitOwner);
+                        System.out.println(ColorConstants.GREEN + "Successfully registered " + flipFitOwner.getUserName() + ColorConstants.RESET);
+
+                        break;
                     }
-                    break;
-                default:
-                    System.out.println("Invalid role choice. Please choose 1, 2, or 3.");
+
+                    case 4: {
+                        System.out.println(ColorConstants.RED + "Exit" + ColorConstants.RESET);
+                        return;
+                    }
+
+                    default: {
+                        throw new InvalidChoiceException(ColorConstants.RED + "Invalid choice entered: " + choice + ColorConstants.RESET);
+                    }
+                }
             }
-        }
-        catch (Exception e) {
-            System.out.println("Please chosen a valid option");
-        }
-    }
-
-    private static void registerGymOwner() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
-
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
-
-        System.out.print("Enter email: ");
-        String email = scanner.nextLine();
-
-        System.out.print("Enter city: ");
-        String city = scanner.nextLine();
-
-        System.out.print("Enter aadhar card number: ");
-        String adharCardNumber = scanner.nextLine();
-
-        System.out.print("Enter gym center id: ");
-        String gymCenterId = scanner.nextLine();
-        List<String> gymCenterIds = new ArrayList<>();
-        gymCenterIds.add(gymCenterId);
-        boolean registrationSuccess = gymOwnerClient.register(UUID.randomUUID().toString(), username, email, password, adharCardNumber, gymCenterIds);
-
-        if (registrationSuccess) {
-            System.out.println("Customer registration successful!");
-        } else {
-            System.out.println("Customer registration failed. Please try again.");
+            while (true);
+        } catch (InvalidChoiceException e) {
+            ExceptionHandler.InvalidChoiceMainMenu(e);
         }
     }
-
-    private static void registerAsCustomer() {
-        Scanner scanner = new Scanner(System.in);
-
-        // Input for registration details
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
-
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
-
-        System.out.print("Enter email: ");
-        String email = scanner.nextLine();
-
-        System.out.print("Enter city: ");
-        String city = scanner.nextLine();
-
-        System.out.print("Enter card number: ");
-        String cardNumber = scanner.nextLine();
-
-        // Call the registerCustomer method with the collected inputs
-        boolean registrationSuccess = customerClient.registerCustomer(username, password, email, city, cardNumber);
-
-        if (registrationSuccess) {
-            System.out.println("Customer registration successful!");
-        } else {
-            System.out.println("Customer registration failed. Please try again.");
-        }
-    }
-
-    private static void login() {
-        System.out.println("Please Choose : \n1: Enter 1 to login as Admin\n2: Enter 2 to login as Customer\n3: " +
-                "Enter 3 to login as GymOwner");
-        Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
-
-        if(choice == 1) {
-            System.out.println("Enter your UserName");
-            String userName = scanner.next();
-
-            System.out.println("Enter your Passkey");
-            String password = scanner.next();
-            adminClient.login(userName, password);
-            gymFlipFitAdminMenu.adminMainPage();
-        }
-        else if (choice == 2) {
-            System.out.println("Enter your UserName");
-            String userName = scanner.next();
-            System.out.println("Enter your Passkey");
-            String password = scanner.next();
-            customerClient.login(userName, password);
-            gymFlipFitCustomerMenu.customerMainPage();
-        }
-        else if (choice == 3) {
-            System.out.println("Enter your UserName");
-            String userName = scanner.next();
-            System.out.println("Enter your Passkey");
-            String password = scanner.next();
-            gymOwnerClient.login(userName, password);
-            gymFlipFitOwnerMenu.gymOwnerMainPage();
-        }
-        else {
-            System.out.println("Please choose a valid option");
-        }
-    }
-
-    private static void homePage() {
-        System.out.println("Welcome to home page!");
-    }
-
 }

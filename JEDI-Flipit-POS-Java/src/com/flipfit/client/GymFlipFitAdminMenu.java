@@ -1,64 +1,127 @@
 package com.flipfit.client;
 
-import com.flipfit.bean.FlipFitGymOwner;
-import com.flipfit.business.AdminInterface;
-import com.flipfit.business.AdminService;
-import java.util.*;
+import com.flipfit.bean.*;
+import com.flipfit.business.FlipFitAdminBusiness;
+import com.flipfit.dao.FlipFitAdminDAOImpl;
+import com.flipfit.exceptions.ExceptionHandler;
+import com.flipfit.exceptions.InvalidChoiceException;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.flipfit.constant.ColorConstants;
 
 public class GymFlipFitAdminMenu {
-    AdminInterface adminService = new AdminService();
+    /**
+     * getAdminView
+     *
+     * @throws InvalidChoiceException
+     */
+    public static void getAdminView() throws InvalidChoiceException {
+        try {
+            int maxIterations = 50;
+            int curIterations = 0;
+            Scanner sc = new Scanner(System.in);
+            FlipFitAdminDAOImpl adminUser = new FlipFitAdminDAOImpl();
+            FlipFitAdminBusiness adminService = new FlipFitAdminBusiness(adminUser);
 
-    public boolean login (String username, String password) {
-        if (userVerify(username, password)){
-            System.out.println("Admin logged in");
-            adminMainPage();
-        }
-        else{
-            System.out.println("Invalid username or password");
-            return false;
-        }
-        return true;
-    }
-//registration
+            int choice = 0;
 
-    private boolean userVerify (String username, String password) {
-        //authentication logic
-        return false;
-    }
+            do {
+                System.out.println(ColorConstants.CYAN + "===========================" + ColorConstants.RESET);
+                System.out.println(ColorConstants.CYAN + "        Admin Menu          " + ColorConstants.RESET);
+                System.out.println(ColorConstants.CYAN + "===========================" + ColorConstants.RESET);
 
-    public void adminMainPage() {
-        Scanner scanner = new Scanner(System.in);
+                System.out.println(ColorConstants.YELLOW + """
+                        Choose an option:
+                         1. View Pending Requests
+                         2. View Approved Owners
+                         3. View all FlipFit Customers
+                         4. View all Centres Using OwnerId
+                         5. Logout
+                        """ + ColorConstants.RESET);
 
-        while (true) {
-            System.out.println("Admin Service Menu:");
-            System.out.println("1. Approve Gym Owner");
-            System.out.println("2. View Remaining Slots");
-            System.out.println("3. Exit");
-            System.out.print("Enter your choice: ");
+                choice = sc.nextInt();
+                switch (choice) {
+                    case 1: {
+                        System.out.println(ColorConstants.BLUE + "=========== View Pending Requests =========== " + ColorConstants.RESET);
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();  // Consume newline
+                        List<FlipFitGymOwner> flipFitGymOwnerList = adminService.getPendingOwnerList();
 
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter Gym Owner ID: ");
-                    String gymOwnerId = scanner.nextLine();
-                    System.out.print("Enter status (true for approve, false for disapprove): ");
-                    boolean status = scanner.nextBoolean();
-                    scanner.nextLine();
-                    boolean approvalStatus = adminService.approveGymOwner(gymOwnerId, status);
-                    System.out.println("Approval status: " + (approvalStatus ? "Success" : "Failed"));
-                    break;
-                case 2:
-                    List<FlipFitGymOwner> remainingSlots = adminService.viewNonApprovedSlots();
-                    break;
-                case 3:
-                    System.out.println("Exiting...");
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Invalid choice, please try again.");
-            }
+                        if (flipFitGymOwnerList.isEmpty()) {
+                            System.out.println("No pending requests moving to main menu");
+                            break;
+                        }
+
+                        for (FlipFitGymOwner flipFitGymOwner : flipFitGymOwnerList) {
+                            System.out.println(ColorConstants.GREEN + "Owner ID: " + flipFitGymOwner.getUserId() + " Aadhar: " + flipFitGymOwner.getAadharNumber() + ColorConstants.RESET);
+                        }
+
+                        System.out.print(ColorConstants.PURPLE + "Type the ownerId of the owner you wish to approve:> " + ColorConstants.RESET);
+                        int ownerId = sc.nextInt();
+
+                        adminUser.validateOwner(ownerId);
+                        System.out.println(ColorConstants.GREEN + "GymOwner with ID " + ownerId + " approved" + ColorConstants.RESET);
+
+                        break;
+                    }
+
+                    case 2: {
+                        System.out.println(ColorConstants.BLUE + "=========== View Approved Owners =========== " + ColorConstants.RESET);
+
+                        List<FlipFitGymOwner> flipFitGymOwnerList = adminService.getApprovedOwnerList();
+                        for (FlipFitGymOwner flipFitGymOwner : flipFitGymOwnerList) {
+                            System.out.println(ColorConstants.GREEN + "Owner ID: " + flipFitGymOwner.getUserId() + " Aadhar: " + flipFitGymOwner.getAadharNumber() + ColorConstants.RESET);
+                        }
+
+                        break;
+                    }
+
+                    case 3: {
+                        System.out.println(ColorConstants.BLUE + "=========== View all FlipFit Customers =========== " + ColorConstants.RESET);
+
+                        List<FlipFitGymCustomer> customersList = adminService.getUserList();
+                        for (FlipFitGymCustomer customers : customersList) {
+                            System.out.println(ColorConstants.GREEN + "CustomerID: " + customers.getUserId() + " CustomerName: " + customers.getUserName() + ColorConstants.RESET);
+                        }
+
+                        break;
+                    }
+
+                    case 4: {
+                        System.out.println(ColorConstants.BLUE + "=========== View Centres Using OwnerId =========== " + ColorConstants.RESET);
+
+                        System.out.print(ColorConstants.PURPLE + "Type the ownerId of the owner for which you wish to view Centres:> " + ColorConstants.RESET);
+                        Scanner in = new Scanner(System.in);
+                        int ownerId = in.nextInt();
+
+                        List<FlipFitGymCentre> flipFitGymCentres = adminService.getGymCentreUsingOwnerId(ownerId);
+                        if (flipFitGymCentres.isEmpty()) {
+                            System.out.println(ColorConstants.RED + "No centres found for owner ID " + ownerId + ColorConstants.RESET);
+                        } else {
+                            System.out.println(ColorConstants.GREEN + "Printing All Centres of Owner " + ColorConstants.RESET);
+                            for (FlipFitGymCentre gymCentre : flipFitGymCentres) {
+                                System.out.println(ColorConstants.GREEN + "CentreID: " + gymCentre.getCentreID() + " City: " + gymCentre.getCity() + " Capacity: " + gymCentre.getCapacity() + ColorConstants.RESET);
+                            }
+                        }
+
+                        break;
+                    }
+
+                    case 5: {
+                        System.out.println("Successfully logged out");
+                        return;
+                    }
+
+                    default: {
+                        throw new InvalidChoiceException(ColorConstants.RED + "Invalid choice entered: " + choice + ColorConstants.RESET);
+                    }
+                }
+                curIterations++;
+            } while (curIterations < maxIterations);
+
+        } catch (InvalidChoiceException e) {
+            ExceptionHandler.InvalidChoiceMainMenu(e);
         }
     }
 }
