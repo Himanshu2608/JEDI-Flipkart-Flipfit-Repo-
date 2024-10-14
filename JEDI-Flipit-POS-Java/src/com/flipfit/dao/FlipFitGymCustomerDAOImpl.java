@@ -156,7 +156,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
         String sql = "INSERT INTO User (userName, roleID, emailID, phoneNumber, password) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, user.getUserName());
-            stmt.setInt(2, user.getRoleID());
+            stmt.setInt(2, user.getRole());
             stmt.setString(3, user.getEmailID());
             stmt.setString(4, user.getPhoneNumber());
             stmt.setString(5, user.getPassword());
@@ -168,7 +168,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int userID = generatedKeys.getInt(1);
-                    user.setUserID(userID);
+                    user.setUserId(userID);
                 } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
@@ -189,7 +189,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
     public FlipFitGymCustomer addCustomer(FlipFitGymCustomer customer, FlipFitUser user) {
         String sql = "INSERT INTO Customer (customerID, city, pincode) VALUES (?, ?, ?)";
         try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, user.getUserID());
+            stmt.setInt(1, user.getUserId());
             stmt.setString(2, customer.getCity());
             stmt.setString(3, customer.getPinCode());
             int affectedRows = stmt.executeUpdate(); // Use executeUpdate() for INSERT
@@ -199,7 +199,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        customer.setUserId(user.getUserID());
+        customer.setUserId(user.getUserId());
         return customer;
     }
 }

@@ -145,7 +145,7 @@ public class GymFlipFitApplication {
                         flipFitGymCustomer.setRole(0);
 
                         flipFitGymCustomer = GCBservice.registerCustomer(flipFitGymCustomer);
-                        gymCustomer.setUserID(flipFitGymCustomer.getUserId());
+                        gymCustomer.setUserId(flipFitGymCustomer.getUserId());
                         System.out.println(ColorConstants.GREEN + "Registration completed for " + gymCustomer.getUserName() + ColorConstants.RESET);
                         System.out.println(ColorConstants.GREEN + "=========== Customer Menu ===========" + ColorConstants.RESET);
 

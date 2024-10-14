@@ -115,7 +115,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
         String sql = "INSERT INTO User (userName, roleID, emailID, phoneNumber, password) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, user.getUserName());
-            stmt.setInt(2, user.getRoleID());
+            stmt.setInt(2, user.getRole());
             stmt.setString(3, user.getEmailID());
             stmt.setString(4, user.getPhoneNumber());
             stmt.setString(5, user.getPassword());
@@ -127,7 +127,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int userID = generatedKeys.getInt(1);
-                    user.setUserID(userID);
+                    user.setUserId(userID);
                 } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
@@ -148,7 +148,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
     public FlipFitGymOwner addGymOwner(FlipFitGymOwner owner, FlipFitUser user) {
         String sql = "INSERT INTO GymOwner (ownerID ,PAN, Aadhar, GSTIN, approved) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, user.getUserID());
+            stmt.setInt(1, user.getUserId());
             stmt.setString(2, owner.getPanId());
             stmt.setString(3, owner.getAadharNumber());
             stmt.setString(4, owner.getGSTNum());
@@ -160,7 +160,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        owner.setUserId(user.getUserID());
+        owner.setUserId(user.getUserId());
         return owner;
     }
 

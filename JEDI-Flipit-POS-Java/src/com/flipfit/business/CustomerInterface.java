@@ -1,17 +1,17 @@
 package com.flipfit.business;
 
-import com.flipfit.bean.Booking;
-import com.flipfit.bean.FlipFitGym;
-import com.flipfit.bean.Slot;
+import com.flipfit.bean.FlipFitBooking;
+import com.flipfit.bean.FlipFitGymCentre;
+import com.flipfit.bean.FlipFitSlots;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 public interface CustomerInterface {
-    public List<FlipFitGym> viewAllGymCenters(String city);
-    public List<Slot> viewAllFreeSlots (String gymId, LocalDate date);
-    public List<Booking> viewAllBookings (String gymId, LocalDate date);
+    public List<FlipFitGymCentre> viewAllGymCenters(String city);
+    public List<FlipFitSlots> viewAllFreeSlots (String gymId, LocalDate date);
+    public List<FlipFitBooking> viewAllBookings (String gymId, LocalDate date);
     public boolean bookSlot (String userId, String gymId, String slotId, LocalDate date, LocalTime time);
     public boolean cancelSlot (String gymId, LocalDate date, LocalTime time);
     public boolean checkValidCustomer (String userName, String password);

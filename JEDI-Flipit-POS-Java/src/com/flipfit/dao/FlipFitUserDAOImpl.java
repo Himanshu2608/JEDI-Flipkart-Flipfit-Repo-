@@ -28,8 +28,8 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
                     FlipFitUser flipFitUser = new FlipFitUser();
                     flipFitUser.setEmailID(emailID);
                     flipFitUser.setPassword(password);
-                    flipFitUser.setUserID(rs.getInt("userID"));
-                    flipFitUser.setRoleID(rs.getInt("roleID"));
+                    flipFitUser.setUserId(rs.getInt("userID"));
+                    flipFitUser.setRole(rs.getInt("roleID"));
                     flipFitUser.setUserName(rs.getString("userName"));
                     return flipFitUser;
                 }
@@ -60,8 +60,8 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
                     FlipFitUser flipFitUser = new FlipFitUser();
                     flipFitUser.setEmailID(emailID);
                     flipFitUser.setPassword(password);
-                    flipFitUser.setUserID(rs.getInt("userID"));
-                    flipFitUser.setRoleID(rs.getInt("roleID"));
+                    flipFitUser.setUserId(rs.getInt("userID"));
+                    flipFitUser.setRole(rs.getInt("roleID"));
                     flipFitUser.setUserName(rs.getString("userName"));
                     return flipFitUser;
                 }
@@ -88,10 +88,10 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
 
 
             // Generate random integers in range 0 to 999
-            FFU.setUserID(rand.nextInt(1000));
-            stmt.setInt(1, FFU.getUserID());
-            stmt.setInt(2, FFU.getUserID());
-            stmt.setInt(3, FFU.getRoleID());
+            FFU.setUserId(rand.nextInt(1000));
+            stmt.setInt(1, FFU.getUserId());
+            stmt.setInt(2, FFU.getUserId());
+            stmt.setInt(3, FFU.getRole());
             stmt.setString(5, FFU.getPhoneNumber());
             stmt.setString(4, FFU.getEmailID());
             stmt.setString(6, FFU.getPassword());
@@ -120,7 +120,7 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
 
             PreparedStatement stmt = con.prepareStatement("DELETE FROM User WHERE userID=(?)");
 
-            stmt.setInt(1, FFU.getUserID());
+            stmt.setInt(1, FFU.getUserId());
 
             int i = stmt.executeUpdate();
             System.out.println(i + " user removed");
@@ -145,9 +145,9 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
 
             PreparedStatement stmt = con.prepareStatement(("UPDATE User SET userName = ?, roleID =? , emailId = ?, phoneNumber = ?, password = ? WHERE userID = ?"));
 
-            stmt.setInt(1, FFU.getUserID());
-            stmt.setInt(2, FFU.getUserID());
-            stmt.setInt(3, FFU.getRoleID());
+            stmt.setInt(1, FFU.getUserId());
+            stmt.setInt(2, FFU.getUserId());
+            stmt.setInt(3, FFU.getRole());
             stmt.setString(5, FFU.getPhoneNumber());
             stmt.setString(4, FFU.getEmailID());
             stmt.setString(6, FFU.getPassword());
@@ -182,10 +182,10 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
             ResultSet rs = stmt.executeQuery();
             rs.next();
             FFU.setUserName(rs.getString("userName"));
-            FFU.setUserID(rs.getInt("userID"));
+            FFU.setUserId(rs.getInt("userID"));
             FFU.setPassword(rs.getString("password"));
             FFU.setPhoneNumber(rs.getString("phoneNumber"));
-            FFU.setRoleID(rs.getInt("roleID"));
+            FFU.setRole(rs.getInt("roleID"));
             FFU.setEmailID(rs.getString("emailId"));
 
             int i = stmt.executeUpdate();
