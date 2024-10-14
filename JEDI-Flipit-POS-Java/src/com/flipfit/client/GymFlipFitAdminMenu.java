@@ -53,9 +53,12 @@ public class GymFlipFitAdminMenu {
                             break;
                         }
 
-                        for (FlipFitGymOwner flipFitGymOwner : flipFitGymOwnerList) {
+//                        for (FlipFitGymOwner flipFitGymOwner : flipFitGymOwnerList) {
+//                            System.out.println(ColorConstants.GREEN + "Owner ID: " + flipFitGymOwner.getUserId() + " Aadhar: " + flipFitGymOwner.getAadharNumber() + ColorConstants.RESET);
+//                        }
+                        flipFitGymOwnerList.forEach(flipFitGymOwner -> {
                             System.out.println(ColorConstants.GREEN + "Owner ID: " + flipFitGymOwner.getUserId() + " Aadhar: " + flipFitGymOwner.getAadharNumber() + ColorConstants.RESET);
-                        }
+                        });
 
                         System.out.print(ColorConstants.PURPLE + "Type the ownerId of the owner you wish to approve:> " + ColorConstants.RESET);
                         int ownerId = sc.nextInt();
@@ -70,9 +73,12 @@ public class GymFlipFitAdminMenu {
                         System.out.println(ColorConstants.BLUE + "=========== View Approved Owners =========== " + ColorConstants.RESET);
 
                         List<FlipFitGymOwner> flipFitGymOwnerList = adminService.getApprovedOwnerList();
-                        for (FlipFitGymOwner flipFitGymOwner : flipFitGymOwnerList) {
+//                        for (FlipFitGymOwner flipFitGymOwner : flipFitGymOwnerList) {
+//                            System.out.println(ColorConstants.GREEN + "Owner ID: " + flipFitGymOwner.getUserId() + " Aadhar: " + flipFitGymOwner.getAadharNumber() + ColorConstants.RESET);
+//                        }
+                        flipFitGymOwnerList.forEach(flipFitGymOwner -> {
                             System.out.println(ColorConstants.GREEN + "Owner ID: " + flipFitGymOwner.getUserId() + " Aadhar: " + flipFitGymOwner.getAadharNumber() + ColorConstants.RESET);
-                        }
+                        });
 
                         break;
                     }
@@ -81,10 +87,12 @@ public class GymFlipFitAdminMenu {
                         System.out.println(ColorConstants.BLUE + "=========== View all FlipFit Customers =========== " + ColorConstants.RESET);
 
                         List<FlipFitGymCustomer> customersList = adminService.getUserList();
-                        for (FlipFitGymCustomer customers : customersList) {
+//                        for (FlipFitGymCustomer customers : customersList) {
+//                            System.out.println(ColorConstants.GREEN + "CustomerID: " + customers.getUserId() + " CustomerName: " + customers.getUserName() + ColorConstants.RESET);
+//                        }
+                        customersList.forEach(customers -> {
                             System.out.println(ColorConstants.GREEN + "CustomerID: " + customers.getUserId() + " CustomerName: " + customers.getUserName() + ColorConstants.RESET);
-                        }
-
+                        });
                         break;
                     }
 
@@ -100,9 +108,12 @@ public class GymFlipFitAdminMenu {
                             System.out.println(ColorConstants.RED + "No centres found for owner ID " + ownerId + ColorConstants.RESET);
                         } else {
                             System.out.println(ColorConstants.GREEN + "Printing All Centres of Owner " + ColorConstants.RESET);
-                            for (FlipFitGymCentre gymCentre : flipFitGymCentres) {
+//                            for (FlipFitGymCentre gymCentre : flipFitGymCentres) {
+//                                System.out.println(ColorConstants.GREEN + "CentreID: " + gymCentre.getCentreID() + " City: " + gymCentre.getCity() + " Capacity: " + gymCentre.getCapacity() + ColorConstants.RESET);
+//                            }
+                            flipFitGymCentres.forEach(gymCentre -> {
                                 System.out.println(ColorConstants.GREEN + "CentreID: " + gymCentre.getCentreID() + " City: " + gymCentre.getCity() + " Capacity: " + gymCentre.getCapacity() + ColorConstants.RESET);
-                            }
+                            });
                         }
 
                         break;

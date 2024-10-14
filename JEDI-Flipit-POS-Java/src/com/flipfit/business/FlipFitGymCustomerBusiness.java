@@ -20,10 +20,14 @@ public class FlipFitGymCustomerBusiness implements IFlipFitGymCustomer {
         FlipFitSlotDAOImpl slotDAO = new FlipFitSlotDAOImpl();
         List<FlipFitBooking> bookingsList= bookingDAO.getAllBookings(userId);
 
-        for (FlipFitBooking booking : bookingsList) {
+//        for (FlipFitBooking booking : bookingsList) {
+//            FlipFitSlots slotdetails = slotDAO.getSlotDetailsById(booking.getSlotId());
+//            System.out.println("Booking ID: " + booking.getBookingId() + " Slot timing " + slotdetails.getSlotTime());
+//        }
+        bookingsList.forEach(booking -> {
             FlipFitSlots slotdetails = slotDAO.getSlotDetailsById(booking.getSlotId());
-            System.out.println("Booking ID: " + booking.getBookingId() + " Slot timing " + slotdetails.getSlotTime());
-        }
+            System.out.println("Booking ID: " + booking.getBookingId() + " Slot timing: " + slotdetails.getSlotTime());
+        });
 
         return bookingsList;
     }
