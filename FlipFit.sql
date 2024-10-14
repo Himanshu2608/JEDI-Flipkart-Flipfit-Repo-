@@ -29,7 +29,7 @@ CREATE TABLE `Booking` (
   `slotID` int NOT NULL,
   `isDeleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`bookingID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,7 @@ CREATE TABLE `Booking` (
 
 LOCK TABLES `Booking` WRITE;
 /*!40000 ALTER TABLE `Booking` DISABLE KEYS */;
+INSERT INTO `Booking` VALUES (5,102,7,1,0);
 /*!40000 ALTER TABLE `Booking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,7 +110,7 @@ CREATE TABLE `GymCentre` (
   PRIMARY KEY (`centreID`),
   KEY `ownerID` (`ownerID`),
   CONSTRAINT `gymcentre_ibfk_1` FOREIGN KEY (`ownerID`) REFERENCES `GymOwner` (`ownerID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +119,7 @@ CREATE TABLE `GymCentre` (
 
 LOCK TABLES `GymCentre` WRITE;
 /*!40000 ALTER TABLE `GymCentre` DISABLE KEYS */;
-INSERT INTO `GymCentre` VALUES (1,103,3,1,'Warangal','Telangana','506001');
+INSERT INTO `GymCentre` VALUES (1,103,3,1,'Warangal','Telangana','506001'),(2,104,10,1,'Bangalore','Karnataka','560122');
 /*!40000 ALTER TABLE `GymCentre` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +147,7 @@ CREATE TABLE `GymOwner` (
 
 LOCK TABLES `GymOwner` WRITE;
 /*!40000 ALTER TABLE `GymOwner` DISABLE KEYS */;
-INSERT INTO `GymOwner` VALUES (103,'QWE!@#$%QW','123456781234','1234512345',0);
+INSERT INTO `GymOwner` VALUES (103,'QWE!@#$%QW','123456781234','1234512345',0),(104,'QWE12345W','934523456509','98765098765',0);
 /*!40000 ALTER TABLE `GymOwner` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +166,7 @@ CREATE TABLE `Payments` (
   PRIMARY KEY (`paymentID`),
   KEY `userID` (`userID`),
   CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Customer` (`customerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -216,7 +217,7 @@ CREATE TABLE `Slots` (
   PRIMARY KEY (`slotID`),
   KEY `centreID` (`centreID`),
   CONSTRAINT `slots_ibfk_1` FOREIGN KEY (`centreID`) REFERENCES `GymCentre` (`centreID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,6 +226,7 @@ CREATE TABLE `Slots` (
 
 LOCK TABLES `Slots` WRITE;
 /*!40000 ALTER TABLE `Slots` DISABLE KEYS */;
+INSERT INTO `Slots` VALUES (1,2,9,7);
 /*!40000 ALTER TABLE `Slots` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,7 +247,7 @@ CREATE TABLE `User` (
   PRIMARY KEY (`userID`),
   KEY `user_ibfk_1_idx` (`roleID`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `Role` (`roleID`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,7 +256,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (101,'Praneeth',1,'xyz@gmail.com','9876543210','Qwerty123456'),(102,'xyz',0,'xyz@gmail.com','9876543210','Qwerty123456'),(103,'qwe',1,'qwe@gmail.com','1234567890','Qwery123456');
+INSERT INTO `User` VALUES (101,'Praneeth',1,'xyz@gmail.com','9876543210','Qwerty123456'),(102,'xyz',0,'xyz@gmail.com','9876543210','Qwerty123456'),(103,'qwe',1,'qwe@gmail.com','1234567890','Qwery123456'),(104,'Himanshu',1,'himanshu@gymowner.com','9876543210','Qwerty123456');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -267,4 +269,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-13  0:53:33
+-- Dump completed on 2024-10-14 12:10:18
