@@ -33,6 +33,9 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
                     flipFitUser.setUserName(rs.getString("userName"));
                     return flipFitUser;
                 }
+                else{
+                    return null;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,7 +56,6 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
         try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, emailID);
             stmt.setString(2, password);
-            System.out.println(stmt);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -64,6 +66,9 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
                     flipFitUser.setRole(rs.getInt("roleID"));
                     flipFitUser.setUserName(rs.getString("userName"));
                     return flipFitUser;
+                }
+                else {
+                    return null;
                 }
             }
         } catch (SQLException e) {

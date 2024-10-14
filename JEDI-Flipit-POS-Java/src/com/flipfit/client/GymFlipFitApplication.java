@@ -66,8 +66,10 @@ public class GymFlipFitApplication {
                                 FlipFitGymCustomerBusiness GCBservice = new FlipFitGymCustomerBusiness(flipFitGymCustomerDAO);
 
                                 gymCustomer = GCBservice.login(gymCustomer);
-                                if (gymCustomer == null)
-                                    throw new IllegalStateException("Invalid credentials");
+                                if (gymCustomer == null){
+                                    System.out.println(ColorConstants.RED + "Login Failed" + ColorConstants.RESET);
+                                    break;
+                                }
                                 System.out.println(ColorConstants.GREEN + "=========== Customer Menu ===========" + ColorConstants.RESET);
                                 GymFlipFitCustomerMenu.getFlipFitCustomerMenu(gymCustomer);
                                 break;
@@ -95,8 +97,10 @@ public class GymFlipFitApplication {
                                 FlipFitGymOwnerBusiness GOBservice = new FlipFitGymOwnerBusiness(flipFitGymOwnerDAO);
 
                                 gymOwner = GOBservice.login(gymOwner);
-                                if (gymOwner == null)
-                                    throw new IllegalStateException("Invalid credentials");
+                                if (gymOwner == null){
+                                    System.out.println(ColorConstants.RED + "Login Failed" + ColorConstants.RESET);
+                                    break;
+                                }
                                 System.out.println(ColorConstants.GREEN + "=========== GymOwner Menu ===========" + ColorConstants.RESET);
                                 GymFlipFitOwnerMenu.getFlipFitOwnerView(gymOwner);
                                 break;
