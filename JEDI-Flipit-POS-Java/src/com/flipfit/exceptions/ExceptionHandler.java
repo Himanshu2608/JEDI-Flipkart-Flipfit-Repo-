@@ -9,4 +9,9 @@ public class ExceptionHandler {
     {
         System.out.println(e.getMessage());
     }
+
+    public static void InvalidLoginDetails(InvalidLoginException e)
+    {
+        System.out.println(e.getMessage());
+    }
 }

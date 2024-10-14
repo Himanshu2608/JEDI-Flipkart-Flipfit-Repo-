@@ -13,10 +13,12 @@ import com.flipfit.dao.FlipFitGymCustomerDAOImpl;
 import com.flipfit.dao.FlipFitGymOwnerDAOImpl;
 import com.flipfit.exceptions.ExceptionHandler;
 import com.flipfit.exceptions.InvalidChoiceException;
+import com.flipfit.exceptions.InvalidLoginException;
 
 import java.util.*;
 
 import com.flipfit.constant.ColorConstants;
+import com.flipfit.exceptions.InvalidLoginException;
 
 
 public class GymFlipFitApplication {
@@ -67,8 +69,7 @@ public class GymFlipFitApplication {
 
                                 gymCustomer = GCBservice.login(gymCustomer);
                                 if (gymCustomer == null){
-                                    System.out.println(ColorConstants.RED + "Login Failed" + ColorConstants.RESET);
-                                    break;
+                                    throw new InvalidLoginException();
                                 }
                                 System.out.println(ColorConstants.GREEN + "=========== Customer Menu ===========" + ColorConstants.RESET);
                                 GymFlipFitCustomerMenu.getFlipFitCustomerMenu(gymCustomer);
@@ -86,6 +87,9 @@ public class GymFlipFitApplication {
                                     System.out.println(ColorConstants.GREEN + "=========== Admin Menu ===========" + ColorConstants.RESET);
                                     GymFlipFitAdminMenu.getAdminView();
                                 }
+                                else{
+                                    throw new InvalidLoginException();
+                                }
                                 break;
                             }
                             case "GymOwner": {
@@ -98,8 +102,7 @@ public class GymFlipFitApplication {
 
                                 gymOwner = GOBservice.login(gymOwner);
                                 if (gymOwner == null){
-                                    System.out.println(ColorConstants.RED + "Login Failed" + ColorConstants.RESET);
-                                    break;
+                                    throw new InvalidLoginException();
                                 }
                                 System.out.println(ColorConstants.GREEN + "=========== GymOwner Menu ===========" + ColorConstants.RESET);
                                 GymFlipFitOwnerMenu.getFlipFitOwnerView(gymOwner);
@@ -222,6 +225,9 @@ public class GymFlipFitApplication {
             while (true);
         } catch (InvalidChoiceException e) {
             ExceptionHandler.InvalidChoiceMainMenu(e);
+        } catch (InvalidLoginException e) {
+            System.out.println(e.getMessage());
         }
+
     }
 }

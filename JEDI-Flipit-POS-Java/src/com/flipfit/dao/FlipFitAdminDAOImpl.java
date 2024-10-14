@@ -23,14 +23,14 @@ public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
             stmt.setString(2, flipFitAdmin.getPassword());
 
             try (ResultSet rs = stmt.executeQuery()) {
-                boolean res= rs.next();
-                if(res){
+                boolean res = rs.next();
+                if(rs.next()){
                     System.out.println("Logged in Successfully");
                 }
                 else{
-                    System.out.println("Invalid Credentials!!!!");
+                    return false;
                 }
-                return res;
+                return true;
             }
 
         } catch (SQLException e) {
