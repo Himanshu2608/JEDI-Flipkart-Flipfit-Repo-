@@ -77,9 +77,12 @@ public class GymFlipFitOwnerMenu {
                         flipFitGymOwner.setUserId(gymOwner.getUserId());
 
                         List<FlipFitGymCentre> centreList = GOBservice.viewCentres(flipFitGymOwner);
-                        for (FlipFitGymCentre centre : centreList) {
-                            System.out.println( "CentreID: " + centre.getCentreID() + ", Capacity: " + centre.getCapacity() + ", City: " + centre.getCity() + ", State: " + centre.getState());
-                        }
+//                        for (FlipFitGymCentre centre : centreList) {
+//                            System.out.println( "CentreID: " + centre.getCentreID() + ", Capacity: " + centre.getCapacity() + ", City: " + centre.getCity() + ", State: " + centre.getState());
+//                        }
+                        centreList.forEach(centre -> {
+                            System.out.println("CentreID: " + centre.getCentreID() + ", Capacity: " + centre.getCapacity() + ", City: " + centre.getCity() + ", State: " + centre.getState());
+                        });
 
                         break;
                     }

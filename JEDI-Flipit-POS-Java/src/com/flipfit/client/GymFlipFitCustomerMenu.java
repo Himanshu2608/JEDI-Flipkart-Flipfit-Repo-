@@ -69,18 +69,25 @@ public class GymFlipFitCustomerMenu {
                         System.out.println( "=========== View Centres ===========");
 
                         List<FlipFitGymCentre> centreList = FCBservice.viewCentres();
-                        for (FlipFitGymCentre centre : centreList) {
-                            System.out.println( "CentreId: " + centre.getCentreID() + ", City: " + centre.getCity() + ", Pincode: " + centre.getPincode() );
-                        }
+//                        for (FlipFitGymCentre centre : centreList) {
+//                            System.out.println( "CentreId: " + centre.getCentreID() + ", City: " + centre.getCity() + ", Pincode: " + centre.getPincode() );
+//                        }
+                        centreList.forEach(centre -> {
+                            System.out.println("CentreId: " + centre.getCentreID() + ", City: " + centre.getCity() + ", Pincode: " + centre.getPincode());
+                        });
+
 
                         System.out.print( "Choose a centre you want to book a slot in:> " );
                         int centreId = sc.nextInt();
 
                         List<FlipFitSlots> slotsList = FCService.viewAvailableSlots(centreId);
                         System.out.println( "These are the available slots:" );
-                        for (FlipFitSlots flipFitSlots : slotsList) {
-                            System.out.println( "Slot Id: " + flipFitSlots.getSlotId() + ", Slot Timing: " + flipFitSlots.getSlotTime() + ", Availability: " + flipFitSlots.getSeatsAvailable() + ", CentreId: " + flipFitSlots.getCentreId() );
-                        }
+//                        for (FlipFitSlots flipFitSlots : slotsList) {
+//                            System.out.println( "Slot Id: " + flipFitSlots.getSlotId() + ", Slot Timing: " + flipFitSlots.getSlotTime() + ", Availability: " + flipFitSlots.getSeatsAvailable() + ", CentreId: " + flipFitSlots.getCentreId() );
+//                        }
+                        slotsList.forEach(flipFitSlots -> {
+                            System.out.println("Slot Id: " + flipFitSlots.getSlotId() + ", Slot Timing: " + flipFitSlots.getSlotTime() + ", Availability: " + flipFitSlots.getSeatsAvailable() + ", CentreId: " + flipFitSlots.getCentreId());
+                        });
 
                         System.out.print("Give the start time you wish to book:> " );
                         int startTime = sc.nextInt();
