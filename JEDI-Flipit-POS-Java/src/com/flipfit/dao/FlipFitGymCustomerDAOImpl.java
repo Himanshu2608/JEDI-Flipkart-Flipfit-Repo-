@@ -1,6 +1,7 @@
 package com.flipfit.dao;
 import com.flipfit.bean.*;
 import com.flipfit.dao.IFlipFitGymCustomerDAO;
+import com.flipfit.exceptions.RegistrationFailedException;
 import java.sql.*;
         import java.util.*;
 
@@ -162,7 +163,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
             stmt.setString(5, user.getPassword());
             int affectedRows = stmt.executeUpdate(); // Use executeUpdate() for INSERT
             if (affectedRows == 0) {
-                throw new SQLException("Creating user failed, no rows affected.");
+                throw new RegistrationFailedException("Creating user failed, no rows affected.");
             }
 
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
@@ -170,10 +171,12 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
                     int userID = generatedKeys.getInt(1);
                     user.setUserId(userID);
                 } else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
+                    throw new RegistrationFailedException("Creating user failed, no ID obtained.");
                 }
             }
 
+        } catch (RegistrationFailedException e) {
+            System.out.println(e.printMessage());
         } catch (SQLException e) {
             e.printStackTrace();
         }

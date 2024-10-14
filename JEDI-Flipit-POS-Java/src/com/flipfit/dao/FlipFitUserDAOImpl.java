@@ -3,6 +3,7 @@ package com.flipfit.dao;
 import com.flipfit.bean.FlipFitUser;
 import com.flipfit.constant.DBConstants;
 import com.flipfit.dao.*;
+import com.flipfit.exceptions.RegistrationFailedException;
 
 import java.sql.*;
 import java.util.Random;
@@ -103,12 +104,19 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
 
 
             int i = stmt.executeUpdate();
-            System.out.println(i + " user added");
+            if (i > 0) {
+                System.out.println(i + " user added");
+            }
+            else{
+                throw new RegistrationFailedException("Registration failed");
+            }
 
             con.close();
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             System.out.println(e.getMessage());
         }
+
     }
 
     /**
