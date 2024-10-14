@@ -42,7 +42,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return centre;
     }
@@ -72,7 +72,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
             }
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return gymcentres;
@@ -99,7 +99,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return null;
@@ -133,7 +133,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return user;
     }
@@ -158,7 +158,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
                 throw new SQLException("Creating owner failed, no rows affected.");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         owner.setUserId(user.getUserId());
         return owner;

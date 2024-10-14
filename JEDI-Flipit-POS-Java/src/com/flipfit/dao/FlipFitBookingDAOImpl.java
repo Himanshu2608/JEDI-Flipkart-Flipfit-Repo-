@@ -4,6 +4,8 @@ import java.sql.*;
 import com.flipfit.bean.FlipFitBooking;
 import java.sql.PreparedStatement;
 import com.flipfit.constant.DBConstants;
+import com.flipfit.exceptions.BookingCancellationFailedException;
+import com.flipfit.exceptions.SlotBookingFailedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ public class FlipFitBookingDAOImpl implements IFlipFitBookingDAO {
 
             int affectedRows = stmt.executeUpdate(); // Use executeUpdate() for INSERT
             if (affectedRows == 0) {
-                throw new SQLException("Creating booking failed, no rows affected.");
+                throw new SlotBookingFailedException("Creating booking failed, no rows affected.");
             }
 
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
@@ -35,12 +37,14 @@ public class FlipFitBookingDAOImpl implements IFlipFitBookingDAO {
                     booking.setBookingId(bookingID);
                     booking.setIsdeleted(false);
                 } else {
-                    throw new SQLException("Creating booking failed, no ID obtained.");
+                    throw new SlotBookingFailedException("Creating booking failed, no ID obtained.");
                 }
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SlotBookingFailedException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         return booking;
     }
@@ -57,12 +61,13 @@ public class FlipFitBookingDAOImpl implements IFlipFitBookingDAO {
             stmt.setInt(1, bookingId);
             int affectedRows = stmt.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Deleting booking failed, no rows affected.");
+                throw new BookingCancellationFailedException("Deleting booking failed, no rows affected.");
             }
             return true;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | BookingCancellationFailedException e) {
+            System.out.println(e.getMessage());
         }
+        return false;
     }
 
     /**
@@ -174,7 +179,7 @@ public class FlipFitBookingDAOImpl implements IFlipFitBookingDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }

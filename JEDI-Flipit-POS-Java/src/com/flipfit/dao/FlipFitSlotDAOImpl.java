@@ -9,6 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.flipfit.exceptions.SlotBookingFailedException;
+import com.flipfit.exceptions.SlotInsertionFailedException;
+import com.flipfit.exceptions.UpdationFailedException;
+
 public class FlipFitSlotDAOImpl implements IFlipFitSlotDAO {
     /**
      * addSlot
@@ -33,9 +37,11 @@ public class FlipFitSlotDAOImpl implements IFlipFitSlotDAO {
                     int slotID = generatedKeys.getInt(1);
                     slot.setSlotId(slotID);
                 } else {
-                    throw new SQLException("Creating slot failed, no ID obtained.");
+                    throw new SlotInsertionFailedException("Creating slot failed, no ID obtained.");
                 }
             }
+        } catch (SlotInsertionFailedException e) {
+            System.out.println(e.getMessage());
         } catch (Exception e) {
             System.out.println("Error adding slot: " + e);
         }
@@ -90,10 +96,10 @@ public class FlipFitSlotDAOImpl implements IFlipFitSlotDAO {
 
             int affectedRows = stmt.executeUpdate(); // Use executeUpdate() for INSERT
             if (affectedRows == 0) {
-                throw new SQLException("Updating slots failed, no rows affected.");
+                throw new UpdationFailedException("Updating slots failed");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | UpdationFailedException e) {
+            System.out.println("Error updating slot: " + e);
             return false;
         }
         return true;
@@ -169,7 +175,7 @@ public class FlipFitSlotDAOImpl implements IFlipFitSlotDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -204,7 +210,7 @@ public class FlipFitSlotDAOImpl implements IFlipFitSlotDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }

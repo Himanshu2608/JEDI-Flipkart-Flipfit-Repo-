@@ -41,7 +41,7 @@ public class FlipFitPaymentsDAOImpl implements IFlipFitPaymentsDAO {
 
             con.close();
         } catch(SQLException | ClassNotFoundException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

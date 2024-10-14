@@ -34,7 +34,7 @@ public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             System.out.println("Logged in Failed");
             return false;
         }
@@ -60,7 +60,7 @@ public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
                 pendingOwners.add(owner);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return pendingOwners;
     }
@@ -85,7 +85,7 @@ public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
                 pendingOwners.add(owner);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return pendingOwners;
     }
@@ -110,7 +110,7 @@ public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
                 users.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return users;
     }
@@ -129,7 +129,7 @@ public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -148,7 +148,7 @@ public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -178,7 +178,7 @@ public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             // Consider logging the error or throwing a custom exception
         }
         return gymCentres;

@@ -8,17 +8,21 @@ package com.flipfit.exceptions;
  */
 public class UpdationFailedException extends Exception {
 
+    private String message = "Updation failed. Please try again";
+    public UpdationFailedException() {}
+    public UpdationFailedException(String message) {
+        this.message = message;
+    }
     /**
      * Overrides the getMessage() method from the Exception class to provide
      * a custom error message when the update operation fails.
      *
      * @return String Custom error message indicating the failure of the update operation.
-
      */
     @Override
     public String getMessage() {
         // Returns a custom error message when this exception is thrown
-        return "Updation failed. Please try again";
+        return message;
     }
 }
 

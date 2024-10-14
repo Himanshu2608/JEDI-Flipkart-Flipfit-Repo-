@@ -4,6 +4,7 @@ import com.flipfit.bean.FlipFitUser;
 import com.flipfit.constant.DBConstants;
 import com.flipfit.dao.*;
 import com.flipfit.exceptions.RegistrationFailedException;
+import com.flipfit.exceptions.UpdationFailedException;
 
 import java.sql.*;
 import java.util.Random;
@@ -39,7 +40,7 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -73,7 +74,7 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -108,7 +109,7 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
                 System.out.println(i + " user added");
             }
             else{
-                throw new RegistrationFailedException("Registration failed");
+                throw new RegistrationFailedException();
             }
 
             con.close();
@@ -166,9 +167,15 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
             stmt.setString(6, FFU.getPassword());
 
             int i = stmt.executeUpdate();
-            System.out.println(i + " user changed");
-
             con.close();
+            if(i > 0) {
+                System.out.println(i + " user changed");
+            }
+            else {
+                throw new UpdationFailedException();
+            }
+        } catch (UpdationFailedException e) {
+            System.out.println(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -206,7 +213,7 @@ public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
 
             con.close();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
         return FFU;
     }

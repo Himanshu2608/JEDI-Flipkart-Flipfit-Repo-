@@ -5,6 +5,7 @@ import java.util.Random;
 import com.flipfit.bean.FlipFitGymCentre;
 import com.flipfit.constant.DBConstants;
 import com.flipfit.bean.FlipFitSlots;
+import com.flipfit.exceptions.UpdationFailedException;
 
 public class FlipFitGymCentreDAOImpl {
     Random rand = new Random();
@@ -96,11 +97,17 @@ public class FlipFitGymCentreDAOImpl {
             stmt.setInt(7, FFGC.getCentreID());
 
             int i = stmt.executeUpdate();
-            System.out.println( i + " centre updated");
-
+            if (i > 0)
+                System.out.println( i + " centre updated");
+            else {
+                throw new UpdationFailedException();
+            }
             con.close();
-        } catch(Exception e){
-            System.out.println(e);
+        } catch (UpdationFailedException e) {
+            System.out.println(e.getMessage());
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
         }
         return FFGC;
     };
@@ -126,6 +133,31 @@ public class FlipFitGymCentreDAOImpl {
         } catch(Exception e){
             System.out.println(e);
         }
+    };
+
+    /**
+     * viewGymCentre
+     * @param centreID
+     */
+    public boolean isGymCentreAvailable(int centreID){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(
+                    DBConstants.DB_URL,DBConstants.USER,DBConstants.PASSWORD);
+
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM GymCentre WHERE centreID=(?)");
+
+            stmt.setInt(1, centreID);
+
+            ResultSet rs = stmt.executeQuery();
+            boolean res = rs.next();
+            con.close();
+            return res;
+
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        return false;
     };
 
     /**

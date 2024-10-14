@@ -2,6 +2,8 @@ package com.flipfit.dao;
 import com.flipfit.bean.*;
 import com.flipfit.dao.IFlipFitGymCustomerDAO;
 import com.flipfit.exceptions.RegistrationFailedException;
+import com.flipfit.exceptions.UpdationFailedException;
+
 import java.sql.*;
         import java.util.*;
 
@@ -26,7 +28,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
                 bookedSlots.add(slot);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return bookedSlots;
@@ -55,7 +57,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -80,7 +82,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
             }
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return gymcentres;
@@ -125,10 +127,10 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
             stmt.setInt(3,customer.getUserId());
             ResultSet rs = stmt.executeQuery();
             if(rs==null) {
-                return null;
+                throw new UpdationFailedException();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | UpdationFailedException e){
+          System.out.println(e.getMessage());
         }
 
         sql = "UPDATE User SET userName=?, password=? WHERE userID=?";
@@ -139,10 +141,10 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
             stmt.setInt(3,customer.getUserId());
             ResultSet rs = stmt.executeQuery();
             if(rs==null) {
-                return null;
+                throw new UpdationFailedException();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | UpdationFailedException e){
+            System.out.println(e.getMessage());
         }
 
         return customer;
@@ -175,10 +177,8 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
                 }
             }
 
-        } catch (RegistrationFailedException e) {
-            System.out.println(e.printMessage());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RegistrationFailedException e) {
+            System.out.println(e.getMessage());
         }
         return user;
     }
@@ -197,10 +197,10 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
             stmt.setString(3, customer.getPinCode());
             int affectedRows = stmt.executeUpdate(); // Use executeUpdate() for INSERT
             if (affectedRows == 0) {
-                throw new SQLException("Creating customer failed, no rows affected.");
+                throw new RegistrationFailedException("Creating customer failed, no rows affected.");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RegistrationFailedException e) {
+            System.out.println(e.getMessage());
         }
         customer.setUserId(user.getUserId());
         return customer;

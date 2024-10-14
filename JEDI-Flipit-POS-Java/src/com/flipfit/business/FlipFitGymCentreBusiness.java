@@ -24,6 +24,10 @@ public class FlipFitGymCentreBusiness implements IFlipFitGymCentre {
         return true;
     }
 
+    public boolean isGymCentreAvailable(int centreId){
+        return gymCentreDAO.isGymCentreAvailable(centreId);
+    }
+
     public List<FlipFitSlots> viewAvailableSlots(int centreId) {
         System.out.println("Viewing Available Slots:> ");
 

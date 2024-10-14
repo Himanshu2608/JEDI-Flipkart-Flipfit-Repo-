@@ -19,10 +19,15 @@ public class SlotBookingFailedException extends Exception {
      * @return String Custom error message with color formatting.
 
      */
+    private String message = "Unable to book slot. Please try again";
+    public SlotBookingFailedException() {}
+    public SlotBookingFailedException(String message) {
+        this.message = message;
+    }
     @Override
     public String getMessage() {
         // Returns a custom error message with color formatting when this exception is thrown
-        return CYAN + "Unable to book slot. Please try again" + ColorConstants.RESET;
+        return CYAN +  message + ColorConstants.RESET;
     }
 }
 
