@@ -35,5 +35,4 @@ public class FlipFitAdminBusiness implements IFlipFitAdmin {
     public List<FlipFitGymCentre> getGymCentreUsingOwnerId(int ownerId){
         return flipFitAdminDAOImpl.getGymCentreUsingOwnerId(ownerId);
     }
-
 }

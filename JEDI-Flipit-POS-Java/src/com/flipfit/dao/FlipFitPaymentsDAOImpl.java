@@ -26,18 +26,18 @@ public class FlipFitPaymentsDAOImpl implements IFlipFitPaymentsDAO {
             Connection con = DriverManager.getConnection(
                     DBConstants.DB_URL,DBConstants.USER,DBConstants.PASSWORD);
 
-            PreparedStatement stmt = con.prepareStatement("REPLACE INTO Payments (userID, paymentType, paymentInfo) VALUES (?, ?, ?)");
+            //PreparedStatement stmt = con.prepareStatement("REPLACE INTO Payments (userID, paymentType, paymentInfo) VALUES (?, ?, ?)");
 
 
             // Generate random integers in range 0 to 999
-            stmt.setInt(1, FFP.getUserID());
-            stmt.setInt(2, FFP.getPaymentType());
-            stmt.setString(3, FFP.getPaymentInfo());
+            //stmt.setInt(1, FFP.getUserID());
+            //stmt.setInt(2, FFP.getPaymentType());
+            //stmt.setString(3, FFP.getPaymentInfo());
 
-            int i = stmt.executeUpdate();
-            if(i==0){
-                throw new SQLException("Creating payment failed. No rows affected");
-            }
+            //int i = stmt.executeUpdate();
+            //if(i==0){
+            //    throw new SQLException("Creating payment failed. No rows affected");
+            //}
 
             con.close();
         } catch(SQLException | ClassNotFoundException e){

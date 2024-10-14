@@ -58,7 +58,7 @@ public class FlipFitSlotDAOImpl implements IFlipFitSlotDAO {
             PreparedStatement stmt = con.prepareStatement("DELETE FROM Slots WHERE centreId = ? AND slotID = ?");
 
             stmt.setInt(1, centreID);
-            stmt.setInt(1, slotID);
+            stmt.setInt(2, slotID);
 
             int i = stmt.executeUpdate();
             System.out.println(i + " slot deleted");
