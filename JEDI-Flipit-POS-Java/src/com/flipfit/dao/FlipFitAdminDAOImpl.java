@@ -27,7 +27,7 @@ public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 boolean res = rs.next();
-                if(rs.next()){
+                if(res){
                     System.out.println("Logged in Successfully");
                     LocalDateTime currentTime = LocalDateTime.now();
                     DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
