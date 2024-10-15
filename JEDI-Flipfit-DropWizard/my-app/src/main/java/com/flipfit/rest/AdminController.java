@@ -39,8 +39,16 @@ public class AdminController {
     @GET
     @Path("/getPendingOwnerList")
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<FlipFitGymOwner> getPendingOwnerList() {
-        return flipFitAdminBusiness.getPendingOwnerList();
+    public List<Map<String, String>> getPendingOwnerList() {
+        List<FlipFitGymOwner> owners=flipFitAdminBusiness.getPendingOwnerList();
+        return owners.stream()
+                .map(owner -> {
+                    Map<String, String> ownerMap = new HashMap<>();
+                    ownerMap.put("name", owner.name);
+                    ownerMap.put("aadharNumber", owner.aadharNumber);
+                    return ownerMap;
+                })
+                .collect(Collectors.toList());
     }
 
     @GET
