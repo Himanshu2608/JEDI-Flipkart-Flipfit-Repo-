@@ -7,6 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
     /**
      * adminLogin
@@ -26,6 +29,10 @@ public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
                 boolean res = rs.next();
                 if(rs.next()){
                     System.out.println("Logged in Successfully");
+                    LocalDateTime currentTime = LocalDateTime.now();
+                    DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                    String formattedDate = currentTime.format(myFormat);
+                    System.out.println("Welcome ADMIN to FlipFit Application\nLogin Date and Time: "+ formattedDate);
                 }
                 else{
                     return false;
