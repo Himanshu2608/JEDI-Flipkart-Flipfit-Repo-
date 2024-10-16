@@ -1,6 +1,9 @@
 package com.flipfit.rest;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -44,7 +47,7 @@ public class AdminController {
         return owners.stream()
                 .map(owner -> {
                     Map<String, String> ownerMap = new HashMap<>();
-                    ownerMap.put("name", owner.name);
+                    ownerMap.put("OwnerId", String.valueOf(owner.getUserId()));
                     ownerMap.put("aadharNumber", owner.aadharNumber);
                     return ownerMap;
                 })
@@ -54,15 +57,33 @@ public class AdminController {
     @GET
     @Path("/getApprovedOwnerList")
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<FlipFitGymOwner> getApprovedOwnerList() {
-        return flipFitAdminBusiness.getApprovedOwnerList();
+    public List<Map<String, String>> getApprovedOwnerList() {
+
+        List<FlipFitGymOwner> owners=flipFitAdminBusiness.getApprovedOwnerList();
+        return owners.stream()
+                .map(owner -> {
+                    Map<String, String> ownerMap = new HashMap<>();
+                    ownerMap.put("OwnerId", String.valueOf(owner.getUserId()));
+                    ownerMap.put("aadharNumber", owner.aadharNumber);
+                    return ownerMap;
+                })
+                .collect(Collectors.toList());
     }
 
     @GET
     @Path("/getCustomersList")
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<FlipFitGymCustomer> getCustomersList() {
-        return flipFitAdminBusiness.getUserList();
+    public List<Map<String, String>> getCustomersList() {
+
+        List<FlipFitGymCustomer> customers = flipFitAdminBusiness.getUserList();
+        return customers.stream()
+                .map(customer -> {
+                    Map<String, String> customerMap = new HashMap<>();
+                    customerMap.put("UserId", String.valueOf(customer.getUserId()));
+                    customerMap.put("UserName", customer.getUserName());
+                    return customerMap;
+                })
+                .collect(Collectors.toList());
     }
 
     @GET

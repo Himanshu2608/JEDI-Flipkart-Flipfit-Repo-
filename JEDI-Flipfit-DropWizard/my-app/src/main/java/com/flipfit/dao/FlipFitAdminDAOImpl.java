@@ -167,7 +167,7 @@ public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
     @Override
     public List<FlipFitGymCentre> getGymCentreUsingOwnerId(int ownerId) {
         List<FlipFitGymCentre> gymCentres = new ArrayList<>();
-        String sql = "SELECT * FROM GymCentre WHERE ownerID = ? AND approved = 1";
+        String sql = "SELECT * FROM GymCentre WHERE ownerID = ?";
 
         try (Connection conn = GetConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -178,6 +178,10 @@ public class FlipFitAdminDAOImpl implements  IFlipFitAdminDAO {
                 while (rs.next()) {
                     FlipFitGymCentre gymCentre = new FlipFitGymCentre();
                     gymCentre.setCentreID(rs.getInt("centreID"));
+                    gymCentre.setOwnerID(rs.getInt("ownerID"));
+                    gymCentre.setApproved(rs.getBoolean("approved"));
+                    gymCentre.setState(rs.getString("state"));
+                    gymCentre.setPincode(rs.getString("pincode"));
                     gymCentre.setCapacity(rs.getInt("capacity"));
                     gymCentre.setCity(rs.getString("city"));
                     gymCentres.add(gymCentre);
