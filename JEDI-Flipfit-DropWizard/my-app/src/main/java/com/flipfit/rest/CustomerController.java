@@ -53,7 +53,7 @@ public class CustomerController {
     @GET
     @Path("/viewBookings")
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<FlipFitBooking> viewBookings() {
+    public List<FlipFitBooking> viewBookings(FlipFitGymCustomer flipFitGymCustomer) {
         return flipFitCustomerBusiness.viewBookedSlots(flipFitGymCustomer.getUserId());
     }
 
