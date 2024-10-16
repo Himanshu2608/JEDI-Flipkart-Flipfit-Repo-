@@ -3,6 +3,7 @@ package com.flipfit.rest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -35,10 +36,14 @@ public class CustomerController {
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
-    public FlipFitUser login(FlipFitUser user) {
+    public Map<String, String> login(FlipFitUser user) {
         FlipFitUser customer = flipFitCustomerBusiness.login(user);
         this.flipFitUser = customer;
-        return flipFitUser;
+        Map<String, String> responseMap = new HashMap<>();
+        responseMap.put("userName", customer.getUserName());
+        responseMap.put("emailID", customer.getEmailID());
+
+        return responseMap;
     }
 
     @POST
