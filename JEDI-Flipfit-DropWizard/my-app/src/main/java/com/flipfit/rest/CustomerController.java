@@ -1,6 +1,9 @@
 package com.flipfit.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -14,10 +17,7 @@ import javax.ws.rs.core.MediaType;
 import com.flipfit.business.FlipFitGymCustomerBusiness;
 import com.flipfit.business.IFlipFitGymCustomer;
 import com.flipfit.exceptions.InvalidChoiceException;
-import com.flipfit.model.FlipFitBooking;
-import com.flipfit.model.FlipFitGymCentre;
-import com.flipfit.model.FlipFitGymCustomer;
-import com.flipfit.model.FlipFitUser;
+import com.flipfit.model.*;
 
 @Path("/customer")
 @Produces(MediaType.APPLICATION_JSON)
@@ -67,8 +67,14 @@ public class CustomerController {
     @PUT
     @Path("/editDetails")
     @Consumes(MediaType.APPLICATION_JSON)
-    public FlipFitGymCustomer editDetails(FlipFitGymCustomer flipFitGymCustomer) throws InvalidChoiceException {
-        return flipFitCustomerBusiness.editDetails(flipFitGymCustomer);
+    public Map<String, String> editDetails(FlipFitGymCustomer flipFitGymCustomer) throws InvalidChoiceException {
+        FlipFitGymCustomer customerDetails = flipFitCustomerBusiness.editDetails(flipFitGymCustomer);
+        Map<String, String> detailMap = new HashMap<>();
+        detailMap.put("userId", String.valueOf(customerDetails.getUserId()));
+        detailMap.put("userName", customerDetails.getUserName());
+        detailMap.put("password", customerDetails.getPassword());
+        detailMap.put("updated", "successful");
+        return detailMap;
     }
 
 }
