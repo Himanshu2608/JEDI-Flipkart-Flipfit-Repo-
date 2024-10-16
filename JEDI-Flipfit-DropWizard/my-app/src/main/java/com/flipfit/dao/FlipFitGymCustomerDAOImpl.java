@@ -76,6 +76,8 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO{
                 gymcentre.setOwnerID(rs.getInt("ownerID"));
                 gymcentre.setCapacity(rs.getInt("capacity"));
                 gymcentre.setCity(rs.getString("city"));
+                gymcentre.setState(rs.getString("state"));
+                gymcentre.setApproved(rs.getBoolean("approved"));
                 gymcentre.setPincode(rs.getString("pincode"));
                 gymcentres.add(gymcentre);
             }
